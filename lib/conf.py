@@ -62,7 +62,7 @@ class Conf:
 
     def get_challenge(self):
         challenge = self.args.challenge
-        name = 'challenges.' + challenge + '.main.' + challenge
+        name = 'challenges.' + challenge + '.' + challenge + '.' + challenge
         return self.get_class(name)()
 
     def get_class(self, klass ):
