@@ -1,14 +1,18 @@
 # python
 # vim: set fileencoding=UTF-8 :
 
+import re
+import types
+
 class Challenge:
 
     sample = 'sample'
+    splitter = '\s+|\s?,\s?'
 
     def __init__(self):
         self.lines = []
-        self.model = []
-        self.result = []
+        self.model = types.SimpleNamespace()
+        self.result = types.SimpleNamespace()
         self.output = ''
 
     def main(self):
@@ -22,7 +26,8 @@ class Challenge:
     #--------------------------------------------------
 
     def read(self):
-        self.lines = self.sample.splitlines()
+        lines = self.sample.strip().splitlines()
+        self.lines = [line.strip() for line in lines]
 
     def build(self):
         pass
@@ -44,10 +49,12 @@ class Challenge:
         return self.lines
 
     def lineToIntegers(self, line_nr):
-        return  [int(i) for i in self.line(line_nr).split(',')]
+        return  [int(i) for i in re.compile(self.splitter)
+                .split(self.line(line_nr))]
 
     def lineToFloats(self, line_nr):
-        return  [float(i) for i in self.line(line_nr).split(',')]
+        return  [float(i) for i in re.compile(self.splitter)
+                .split(self.line(line_nr))]
 
     #--------------------------------------------------
     # Packing
