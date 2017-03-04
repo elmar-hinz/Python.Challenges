@@ -1,6 +1,6 @@
 #!/usr/bin/env  python3
 
-import lib.runner
-import lib.conf
+from challenge.runner import Runner
+from challenge.conf import Conf
 
-lib.runner.Runner(lib.conf.Conf()).main()
+Runner(Conf()).main()
