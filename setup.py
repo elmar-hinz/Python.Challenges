@@ -9,7 +9,7 @@ setup(
     url='https://github.com/elmar-hinz/Learn.Bioinformatics.Python',
     author='Elmar Hinz',
     license='MIT',
-    packages=['challenge', 'challenges.HelloWorld'],
+    packages=['challenge', 'HelloWorld'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

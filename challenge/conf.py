@@ -39,7 +39,7 @@ class Conf:
         sys.exit(1)
 
     def get_challenge_dir(self):
-        return self.root + '/challenges/' + self.args.challenge
+        return self.root + '/' + self.args.challenge
 
     def get_input_file(self):
         return os.path.realpath(self.args.file)
@@ -57,12 +57,15 @@ class Conf:
         return os.path.realpath(self.root + '/latest.txt')
 
     def get_challenges(self):
-        pattern = self.root + '/challenges/*'
-        return [os.path.basename(d) for d in glob.glob(pattern)]
+        pattern = self.root + '/*/'
+        return [d for d in (os.path.basename(d[:-1])
+                for d in glob.glob(pattern))
+                if d[0:1] == d[0:1].upper() and d[0:1] != '_'
+               ]
 
     def get_challenge(self):
         challenge = self.args.challenge
-        name = 'challenges.' + challenge + '.' + challenge + '.' + challenge
+        name = challenge + '.' +  challenge + '.' + challenge
         return self.get_class(name)()
 
     def get_class(self, klass ):
