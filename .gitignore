@@ -1,7 +1,8 @@
 __pycache__
+*.egg-info/
 *.pyc
+/dist/
 /challenges
 latest.txt
 next.txt
-challenge.egg-info/
 
