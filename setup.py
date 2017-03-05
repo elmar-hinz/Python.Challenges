@@ -7,7 +7,7 @@ setup(
     version='1',
     description='Library to assist programming, testing and execution '
         + ' of solutions for coding challenges like those on stepik.org.',
-    url='https://github.com/elmar-hinz/Learn.Bioinformatics.Python',
+    url='https://github.com/elmar-hinz/Python.Challenges',
     author='Elmar Hinz',
     author_email='t3elmar@gmail.com',
     license='MIT',
