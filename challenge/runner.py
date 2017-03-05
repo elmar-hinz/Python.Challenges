@@ -2,6 +2,7 @@
 
 import time
 import sys
+from challenge.scaffold import Scaffold
 
 class Runner:
 
@@ -13,6 +14,11 @@ class Runner:
     def main(self):
         if self.conf.args.list:
             self.list_challenges()
+        elif self.conf.args.scaffold:
+            if self.conf.args.challenge:
+                Scaffold(self.conf).scaffold()
+            else:
+                self.conf.print_help()
         elif self.conf.args.challenge:
             self.run_challenge()
             if self.conf.args.verbose:
