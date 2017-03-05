@@ -1,5 +1,3 @@
-# vim: set fileencoding=UTF-8 :
-
 import argparse
 import os
 import sys
@@ -11,8 +9,8 @@ __version__ = '1.0'
 class Conf:
 
     def __init__(self):
-        file_extension = '.txt'
-        self.root = os.path.dirname(os.path.realpath(__file__ + '/..'))
+        sys.path.insert(0, '.')
+        self.root = os.path.realpath('.')
 
     def parse_arguments(self):
         self.parser = argparse.ArgumentParser()
@@ -68,7 +66,7 @@ class Conf:
         name = challenge + '.' +  challenge + '.' + challenge
         return self.get_class(name)()
 
-    def get_class(self, klass ):
+    def get_class(self, klass):
         parts = klass.split('.')
         module = ".".join(parts[:-1])
         kls = parts[-1]

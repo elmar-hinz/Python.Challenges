@@ -11,6 +11,11 @@ setup(
     author_email='t3elmar@gmail.com',
     license='MIT',
     packages=['challenge', 'HelloWorld'],
+    entry_points={
+        'console_scripts': [
+            'challenge=challenge.main:main',
+            ],
+        },
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
