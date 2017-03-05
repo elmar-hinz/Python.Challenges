@@ -1,5 +1,5 @@
 #!/usr/bin/env  python3
 
-import challenge.main
+import challenges.main
 
-challenge.main.main()
+challenges.main.main()

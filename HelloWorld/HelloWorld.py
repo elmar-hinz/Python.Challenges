@@ -27,7 +27,7 @@ This is recommended for every challenge. This is useful during development or
 for smoke tests.
 """
 
-from challenge.challenge import Challenge
+from challenges.challenge import Challenge
 
 class  HelloWorld(Challenge):
     """This is the HelloWorld Challenge class.

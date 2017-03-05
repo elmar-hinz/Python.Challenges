@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(
-    name='bichallenge',
+    name='challenges',
     version='1',
     description='Library to assist programming, testing and execution '
         + ' of solutions for coding challenges like those on stepik.org.',
@@ -11,11 +11,11 @@ setup(
     author='Elmar Hinz',
     author_email='t3elmar@gmail.com',
     license='MIT',
-    packages=['challenge', 'HelloWorld'],
+    packages=['challenges', 'HelloWorld'],
     entry_points={
         'console_scripts': [
-            'challenge=challenge.main:main',
-            'stepic=challenge.main:main',
+            'challenge=challenges.main:main',
+            'stepic=challenges.main:main',
             ],
         },
     classifiers=[
