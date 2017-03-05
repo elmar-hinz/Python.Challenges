@@ -3,9 +3,10 @@
 from setuptools import setup
 
 setup(
-    name='challenge',
-    version='1.0',
-    description='Supporting library for challenges like those on stepik.org.',
+    name='bichallenge',
+    version='1',
+    description='Library to assist programming, testing and execution '
+        + ' of solutions for coding challenges like those on stepik.org.',
     url='https://github.com/elmar-hinz/Learn.Bioinformatics.Python',
     author='Elmar Hinz',
     author_email='t3elmar@gmail.com',

@@ -26,7 +26,7 @@ class Scaffold:
                 sys.exit('Sorry, could not write ' + file + '.')
 
     def get_content(self):
-        text = """
+        text = '''
 from challenge.challenge import Challenge
 
 class {}(Challenge):
@@ -38,5 +38,5 @@ class {}(Challenge):
 
     def calc(self):
         self.result = self.model.number
-"""
+'''
         return text.strip().format(self.conf.get_challenge_class())
