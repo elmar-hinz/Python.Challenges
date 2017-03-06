@@ -21,11 +21,20 @@ class Scaffold:
         else:
             try:
                 with open(file, 'w') as handle:
-                    handle.write(self.get_content())
+                    handle.write(self.get_class_content())
+            except OSError:
+                sys.exit('Sorry, could not write ' + file + '.')
+        file = self.conf.get_unittest_file()
+        if os.path.exists(file):
+            sys.exit('File ' + file + ' already exists.')
+        else:
+            try:
+                with open(file, 'w') as handle:
+                    handle.write(self.get_unittest_contet())
             except OSError:
                 sys.exit('Sorry, could not write ' + file + '.')
 
-    def get_content(self):
+    def get_class_content(self):
         text = '''
 from challenges.challenge import Challenge
 
@@ -40,3 +49,20 @@ class {}(Challenge):
         self.result = self.model.number
 '''
         return text.strip().format(self.conf.get_challenge_class())
+
+    def get_unittest_contet(self):
+        text = '''
+import unittest
+from {}.{} import {}
+
+class {}TestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.challenge = {}()
+
+    def test__init__(self):
+        self.assertIsInstance(self.challenge, {})
+
+'''
+        c = self.conf.get_challenge_class()
+        return text.strip().format(c, c, c, c, c, c)

@@ -46,6 +46,10 @@ class Conf:
         challenge = self.args.challenge
         return self.root + '/' + challenge + '/' + challenge + '.py'
 
+    def get_unittest_file(self):
+        challenge = self.args.challenge
+        return self.root + '/' + challenge + '/' + challenge + 'TestCase.py'
+
     def get_input_file(self):
         return os.path.realpath(self.args.file)
 
