@@ -23,7 +23,7 @@ setup(
     entry_points={
         'console_scripts': [
             'challenge=challenges.main:main',
-            'stepic=challenges.main:main',
+            'stepik=challenges.main:main',
         ],
     },
     classifiers=[
