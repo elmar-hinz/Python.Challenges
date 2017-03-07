@@ -1,8 +1,8 @@
 import os
 import sys
 
-class Scaffold:
 
+class Scaffold:
     def __init__(self, conf):
         self.conf = conf
 
@@ -30,7 +30,7 @@ class Scaffold:
         else:
             try:
                 with open(file, 'w') as handle:
-                    handle.write(self.get_unittest_contet())
+                    handle.write(self.get_unittest_content())
             except OSError:
                 sys.exit('Sorry, could not write ' + file + '.')
 
@@ -50,7 +50,7 @@ class {}(Challenge):
 '''
         return text.strip().format(self.conf.get_challenge_class())
 
-    def get_unittest_contet(self):
+    def get_unittest_content(self):
         text = '''
 import unittest
 from {}.{} import {}

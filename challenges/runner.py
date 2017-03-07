@@ -1,11 +1,11 @@
-# vim: set fileencoding=UTF-8 :
-
-import time
 import sys
+import time
+import unittest
+
 from challenges.scaffold import Scaffold
 
-class Runner:
 
+class Runner:
     def __init__(self, conf):
         self.start = time.time()
         self.conf = conf
@@ -14,6 +14,11 @@ class Runner:
     def main(self):
         if self.conf.args.list:
             self.list_challenges()
+        elif self.conf.args.unittest:
+            if self.conf.args.challenge:
+                self.run_unittest()
+            else:
+                self.conf.print_help()
         elif self.conf.args.scaffold:
             if self.conf.args.challenge:
                 Scaffold(self.conf).scaffold()
@@ -27,23 +32,22 @@ class Runner:
             self.conf.print_help()
 
     def run_challenge(self):
-        Challenge = self.conf.get_challenge()
-        self.set_sample(Challenge)
-        Challenge.main()
-        self.write(Challenge)
+        challenge = self.conf.get_challenge()
+        self.set_sample(challenge)
+        challenge.main()
+        self.write(challenge)
 
     def set_sample(self, challenge):
         if self.conf.args.file:
-            sample = self.read_file()
+            challenge.sample = self.read_file()
         elif self.conf.args.klass:
-            sample = challenge.sample
+            challenge.sample = challenge.sample
         else:
             stdin = sys.stdin.read().strip()
             if stdin:
-                sample = stdin
+                challenge.sample = stdin
             else:
                 self.conf.print_help()
-        challenge.sample = sample
 
     def read_file(self):
         with open(self.conf.get_input_file(), 'r') as pointer:
@@ -66,4 +70,7 @@ class Runner:
     def list_challenges(self):
         print(' * ' + '\n * '.join(self.conf.get_challenges()))
 
-
+    def run_unittest(self):
+        c = self.conf.get_unittest()
+        case = unittest.defaultTestLoader.loadTestsFromTestCase(c)
+        unittest.TextTestRunner().run(case)

@@ -1,37 +1,45 @@
 import argparse
+import glob
+import importlib
 import os
 import sys
-import importlib
-import glob
 
-__version__ = '1'
 
 class Conf:
-
     def __init__(self):
         sys.path.insert(0, '.')
         sys.setrecursionlimit(5000)
         self.root = os.path.realpath('.')
+        self.parser = None
+        self.args = None
+        path = '{0}/version.txt'.format(os.path.realpath(
+            os.path.dirname(__file__) + '/..'))
+        with open(path) as f:
+            self.version = f.read().strip()
 
     def parse_arguments(self):
         self.parser = argparse.ArgumentParser()
-        self.parser.add_argument("challenge", nargs='?',
-            help="the challenge to run or to scaffold")
-        self.parser.add_argument("-s", "--scaffold", action="store_true",
-            help="scaffold challange")
-        self.parser.add_argument("-f", "--file", action="store",
-            help="load sample from given file")
-        self.parser.add_argument("-k", "--klass", action="store_true",
-            help="use the sample given in the challenge class")
-        self.parser.add_argument("-l", "--list", action="store_true",
-            help="list challenges")
-        self.parser.add_argument("-v", "--verbose", action="store_true",
-            help="verbose output".format(__version__))
-        self.parser.add_argument("-V", "--version", action="version",
-            version="%(prog)s {}".format(__version__))
-        self.parser.add_argument("-w", "--write", action="store_true",
-            help="write input and sample file into challenge directory")
-        if len(sys.argv)==1:
+        self.parser.add_argument('challenge', nargs='?',
+                                 help='the challenge to run, to scaffold or '
+                                      'to test')
+        self.parser.add_argument('-f', '--file', action='store',
+                                 help='load sample from given file')
+        self.parser.add_argument('-k', '--klass', action='store_true',
+                                 help='use sample form challenge class file')
+        self.parser.add_argument('-l', '--list', action='store_true',
+                                 help='list challenges')
+        self.parser.add_argument('-s', '--scaffold', action='store_true',
+                                 help="scaffold challenge")
+        self.parser.add_argument('-u', '--unittest', action='store_true',
+                                 help='unittest challenge')
+        self.parser.add_argument('-v', '--verbose', action='store_true',
+                                 help='verbose output')
+        self.parser.add_argument('-V', '--version', action='version',
+                                 version='%(prog)s {}'.format(self.version))
+        self.parser.add_argument('-w', '--write', action='store_true',
+                                 help='write input and sample file into '
+                                      'challenge directory')
+        if len(sys.argv) == 1:
             self.print_help()
         self.args = self.parser.parse_args()
 
@@ -68,23 +76,30 @@ class Conf:
     def get_challenges(self):
         pattern = self.root + '/*/'
         return [d for d in (os.path.basename(d[:-1])
-                for d in glob.glob(pattern))
+                            for d in glob.glob(pattern))
                 if d[0:1] == d[0:1].upper() and d[0:1] != '_'
-               ]
+                ]
 
     def get_challenge_class(self):
         return self.args.challenge
 
     def get_full_qualified_challenge_class(self):
         challenge = self.args.challenge
-        return challenge + '.' +  challenge + '.' + challenge
+        return challenge + '.' + challenge + '.' + challenge
+
+    def get_full_qualified_unittest_class(self):
+        challenge = self.args.challenge
+        return (challenge + '.' + challenge + 'TestCase.' + challenge +
+                'TestCase')
 
     def get_challenge(self):
         return self.get_class(self.get_full_qualified_challenge_class())()
 
-    def get_class(self, klass):
-        parts = klass.split('.')
-        module = ".".join(parts[:-1])
-        kls = parts[-1]
-        return getattr(importlib.import_module(module), kls)
+    def get_unittest(self):
+        return self.get_class(self.get_full_qualified_unittest_class())
 
+    @staticmethod
+    def get_class(class_):
+        parts = class_.split('.')
+        module = ".".join(parts[:-1])
+        return getattr(importlib.import_module(module), parts[-1])
