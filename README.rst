@@ -186,7 +186,7 @@ There are two deliberate exceptions:
 Installation
 ============
 
-.. Important::
+.. important::
 
     This solftware requieres Python 3.
 
