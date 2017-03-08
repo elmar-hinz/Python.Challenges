@@ -231,4 +231,13 @@ If you have a fully configured python 3 environment up and running you can insta
 The library will be included into the python class path. The runner will be globally available as `challenge` or
 alternatively as `stepik`.
 
+.. code-block:: bash
+
+    prompt> challenge -V
+    challenge 0.1.2
+
+    prompt> stepik -V
+    stepik 0.1.2
+
+
 
