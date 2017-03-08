@@ -1,6 +1,6 @@
-=================
-Python.Challenges
-=================
+==================
+README: Challenges
+==================
 
 Library to assist programming, testing and execution of solutions for coding
 challenges like those on stepik.org
@@ -230,4 +230,5 @@ If you have a fully configured python 3 environment up and running you can insta
 
 The library will be included into the python class path. The runner will be globally available as `challenge` or
 alternatively as `stepik`.
+
 
