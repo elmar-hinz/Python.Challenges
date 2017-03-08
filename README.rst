@@ -1,9 +1,14 @@
+
 ==================
 README: Challenges
 ==================
 
 Library to assist programming, testing and execution of solutions for coding
 challenges like those on stepik.org
+
+Find the full documentation at Readthedocs_.
+
+.. _Readthedocs: http://challenges.readthedocs.io
 
 A Minimal Hello World Class <Add>
 =================================

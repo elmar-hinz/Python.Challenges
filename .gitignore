@@ -3,7 +3,7 @@ __pycache__
 *.pyc
 /dist/
 /build/
-/docs/
+/documentation/
 _build/
 latest.txt
 next.txt
