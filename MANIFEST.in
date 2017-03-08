@@ -1,3 +1,4 @@
 include README.rst
-include docs/*.html
-
+include LICENSE
+include version.txt
+recursive-include docs *

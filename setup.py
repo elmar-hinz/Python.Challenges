@@ -1,13 +1,19 @@
 #!/usr/bin/env  python3
 
-from os.path import dirname, realpath
-
 from setuptools import setup
+# To use a consistent encoding
+from codecs import open
+from os import path
 
-version_file = realpath(dirname(__file__)) + '/version.txt'
+here = path.abspath(path.dirname(__file__))
 
-with open(version_file) as f:
+# Read version from central version file
+with open(path.join(here, 'version.txt'), encoding='utf-8') as f:
     version = f.read().strip()
+
+# Get the long description from the README file
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='challenges',
@@ -15,11 +21,15 @@ setup(
     description='Library to assist programming, testing and execution '
                 + 'of solutions for coding challenges like those on '
                   'stepik.org',
+    long_description=long_description,
+    keywords='education stepik coursera bioinformatics challenges',
     url='https://github.com/elmar-hinz/Python.Challenges',
     author='Elmar Hinz',
     author_email='t3elmar@gmail.com',
     license='MIT',
     packages=['challenges', 'HelloWorld'],
+    package_data={ 'HelloWorld': ['sample.txt', 'result.txt'], },
+    include_package_data=True,
     entry_points={
         'console_scripts': [
             'challenge=challenges.main:main',
