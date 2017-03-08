@@ -10,6 +10,16 @@ Find the full documentation at Readthedocs_.
 
 .. _Readthedocs: http://challenges.readthedocs.io
 
+:State: alpha
+:License: MIT
+:Author: Elmar Hinz
+:Repository: https://github.com/elmar-hinz/Python.Challenges
+:Documentation Server: http://challenges.readthedocs.io |badge|
+
+.. |badge| image:: https://readthedocs.org/projects/challenges/badge/?version=latest
+    :target: http://challenges.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 A Minimal Hello World Class <Add>
 =================================
 
@@ -36,8 +46,11 @@ the **Challenge Runner** via the command line. In Bioinformatics this is often a
 
 .. hint:: See a more verbose example of HelloWorld.
 
-    * https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/HelloWorld.py
-    * https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/HelloWorldTestCase.py
+    * HelloWorld_
+    * HelloWorldTestCase_
+
+.. _HelloWorld: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/HelloWorld.py
+.. _HelloWorldTestCase: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/HelloWorldTestCase.py
 
 
 The Challenge Runner Supports the Following Features
@@ -169,9 +182,9 @@ To quickly see all available options.
 Naming Conventions
 ==================
 
-The naming conventions follow the standards as defined by **PEP 8 -- Style Guide for Python Code**
+The naming conventions follow the standards as defined by `PEP 8`_ **Style Guide for Python Code**
 
-https://www.python.org/dev/peps/pep-0008/
+.. _`PEP 8`: https://www.python.org/dev/peps/pep-0008/
 
 There are two deliberate exceptions:
 
@@ -210,7 +223,7 @@ This is the most simple setup to get started. After downloading change into the 
 
 .. code-block:: bash
 
-    prompt> bin/challenge -u HelloWorld
+    prompt> bin/challenge --unittest HelloWorld
     ...
     ----------------------------------------------------------------------
     Ran 3 tests in 0.001s
@@ -221,7 +234,7 @@ Now you are ready to create your challenge side-by-side with the `HelloWorld` ch
 
 .. code-block:: bash
 
-    prompt> bin/challenge -s MyChallenge
+    prompt> bin/challenge --scaffold MyChallenge
 
 Use <pip> to Install <challenges>
 ---------------------------------
@@ -238,11 +251,10 @@ alternatively as `stepik`.
 
 .. code-block:: bash
 
-    prompt> challenge -V
+    prompt> challenge --version
     challenge 0.1.2
 
-    prompt> stepik -V
+    prompt> stepik --version
     stepik 0.1.2
-
 
 
