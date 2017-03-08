@@ -28,7 +28,10 @@ setup(
     author_email='t3elmar@gmail.com',
     license='MIT',
     packages=['challenges', 'HelloWorld'],
-    package_data={ 'HelloWorld': ['sample.txt', 'result.txt'], },
+    package_data={
+        'HelloWorld': ['sample.txt', 'result.txt'],
+        'challenges': ['version.txt'],
+        },
     include_package_data=True,
     entry_points={
         'console_scripts': [
@@ -36,6 +39,7 @@ setup(
             'stepik=challenges.main:main',
         ],
     },
+    scripts=['bin/challenge'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

@@ -13,7 +13,7 @@ class Conf:
         self.parser = None
         self.args = None
         path = '{0}/version.txt'.format(os.path.realpath(
-            os.path.dirname(__file__) + '/..'))
+            os.path.dirname(__file__)))
         with open(path) as f:
             self.version = f.read().strip()
 
