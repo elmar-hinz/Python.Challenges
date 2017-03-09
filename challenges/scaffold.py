@@ -53,16 +53,17 @@ class {}(Challenge):
     def get_unittest_content(self):
         text = '''
 import unittest
-from {}.{} import {}
+from {}.challenge import {}
 
 class {}TestCase(unittest.TestCase):
 
     def setUp(self):
         self.challenge = {}()
+        self.challenge.read()
 
     def test__init__(self):
         self.assertIsInstance(self.challenge, {})
 
 '''
         c = self.conf.get_challenge_class()
-        return text.strip().format(c, c, c, c, c, c)
+        return text.strip().format(c, c, c, c, c)

@@ -70,10 +70,10 @@ The Layout of Your Directory Looks Like This
 .. code-block:: bash
 
     myChallenges/
-        Challenge1/Challenge1.py
-        Challenge1/Challenge1TestCase.py
-        Challenge2/Challenge2.py
-        Challenge2/Challenge2TestCase.py
+        Challenge1/challenge.py
+        Challenge1/testcase.py
+        Challenge2/challenge.py
+        Challenge2/testcase.py
         ... more challenges ...
 
 The names `Challenge1` and `Challenge2` are just placeholders for the names you choose during scaffolding.
@@ -107,8 +107,9 @@ You now find the files:
 .. code-block:: bash
 
     myChallenges/
-        Challenge3/Challenge3.py
-        Challenge3/Challenge3TestCase.py
+        Challenge3/challenge.py
+        Challenge3/testcase.py
+        Challenge3/__init__.py
 
 Check it's working by running the unit test case.
 
@@ -190,10 +191,9 @@ There are two deliberate exceptions:
 
 1. Challenge module names are **CamelCase**:
 
-    In contradiction to the style guide directory and class file of the challenges are not all lowercase. Especially the
+    In contradiction to the style guide directories of the challenges are not all lowercase. Especially the
     first character must be uppercase. This is used to find and list the challenge directories between other modules.
-    Even more, the directory, the class file and the class name must all use the same word, with the `.py` extension for
-    the file.
+    The directory and the class name must use the same word, with the `.py` extension for the file.
 
 2. Inherited class attributes and methods don't have a leading underscore:
 
@@ -201,17 +201,28 @@ There are two deliberate exceptions:
     underscores. As inheritance is a core concept of the challenge class, this would lead to a hell of leading
     underscores. For this reason we don't follow the style guide in this recommendation.
 
+.. tip::
+
+    On useful advantage of naming the directory just like your challenge class is, that you can use the path expansion
+    mechanism of the shell. Write the first characters of the class/directory name and hit <TAB>. Now you can use the
+    directory name as name of the challenge. A trailing slash is discarded. The following two inputs are equivalent.
+
+    .. code-block:: bash
+
+        prompt> challenge -k HelloWorld
+        prompt> challenge -k HelloWorld/
+
 Installation
 ============
 
 .. important::
 
-    This solftware requieres Python 3.
+    This software requires Python 3.
 
 Clone from Github
 -----------------
 
-You can clone (or download) the Challenges project directly from Github. In this case the scripts and pathes are not
+You can clone (or download) the Challenges project directly from Github. In this case the scripts and paths are not
 configured globally. Either you configure it globally or you place your challenges immediately into the projects folder
 so that the paths are detected relatively.
 

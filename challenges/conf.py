@@ -42,6 +42,8 @@ class Conf:
         if len(sys.argv) == 1:
             self.print_help()
         self.args = self.parser.parse_args()
+        if self.args.challenge[-1:] == '/':
+            self.args.challenge = self.args.challenge[0:-1]
 
     def print_help(self):
         self.parser.print_help()
@@ -52,11 +54,11 @@ class Conf:
 
     def get_challenge_file(self):
         challenge = self.args.challenge
-        return self.root + '/' + challenge + '/' + challenge + '.py'
+        return self.root + '/' + challenge + '/challenge.py'
 
     def get_unittest_file(self):
         challenge = self.args.challenge
-        return self.root + '/' + challenge + '/' + challenge + 'TestCase.py'
+        return self.root + '/' + challenge + '/testcase.py'
 
     def get_input_file(self):
         return os.path.realpath(self.args.file)
@@ -85,12 +87,11 @@ class Conf:
 
     def get_full_qualified_challenge_class(self):
         challenge = self.args.challenge
-        return challenge + '.' + challenge + '.' + challenge
+        return challenge + '.challenge.' + challenge
 
     def get_full_qualified_unittest_class(self):
         challenge = self.args.challenge
-        return (challenge + '.' + challenge + 'TestCase.' + challenge +
-                'TestCase')
+        return (challenge + '.testcase.' + challenge + 'TestCase')
 
     def get_challenge(self):
         return self.get_class(self.get_full_qualified_challenge_class())()

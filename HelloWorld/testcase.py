@@ -1,6 +1,6 @@
 import unittest
 
-from .HelloWorld import HelloWorld
+from .challenge import HelloWorld
 
 
 class HelloWorldTestCase(unittest.TestCase):
