@@ -20,8 +20,8 @@ Find the full documentation at Readthedocs_.
     :target: http://challenges.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-A Minimal Hello World Class <Add>
-=================================
+Hello world
+===========
 
 .. code-block:: python
 
@@ -52,24 +52,23 @@ the **Challenge Runner** via the command line. In Bioinformatics this is often a
 .. _HelloWorldChallenge: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/challenge.py
 .. _HelloWorldTest: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/test.py
 
-
-The Challenge Runner Supports the Following Features
-====================================================
+Features
+========
 
     * Listing available challenges
-    * Scaffolding a new challenge directory, with a challenge class and a unit test class
-    * Executing the small `sample` within the challenge class
+    * Scaffolding a new challenge directory with a challenge class and a unit test class
+    * Executing the `sample` from the sample class attribute
     * Reading input files from the command line
-    * Result output on the command line
+    * Output formatted result on the command line
     * Writing `sample.txt` and matching `result.txt` into the challenges directory
     * Running the unit test case of a challenge
 
-The Layout of Your Directory Looks Like This
-============================================
+Directory layout
+================
 
 .. code-block:: bash
 
-    myChallenges/
+    anyDirectory/
         Challenge1/challenge.py
         Challenge1/test.py
         Challenge2/challenge.py
@@ -78,14 +77,13 @@ The Layout of Your Directory Looks Like This
 
 The names `Challenge1` and `Challenge2` are just placeholders for the names you choose during scaffolding.
 
-Running the Challenge Runner
-============================
+Challenge runner
+================
 
 The directory `myChallenges/` is the base directory of your challenges project. It's the directory from where to use the
 **Challenge Runner**.
 
-
-List the Available Challenges
+List the available challenges
 -----------------------------
 
 .. code-block:: bash
@@ -95,7 +93,7 @@ List the Available Challenges
     * Challenge2
     * ...
 
-Scaffolding a New Challenge
+Scaffolding a new challenge
 ---------------------------
 
 .. code-block:: bash
@@ -109,7 +107,6 @@ You now find the files:
     myChallenges/
         Challenge3/challenge.py
         Challenge3/test.py
-        Challenge3/__init__.py
 
 Check it's working by running the unit test case.
 
@@ -122,7 +119,7 @@ Check it's working by running the unit test case.
 
     OK
 
-Run <sample> from the Class File
+Run <sample> from the class file
 --------------------------------
 
 This is the small sample directly coded into the challenge class.
@@ -144,7 +141,7 @@ This is the small sample directly coded into the challenge class.
     These files are just for convenience and are overwritten by the next run.
 
 
-Read Sample from an Input File
+Read sample from an input file
 ------------------------------
 
 .. code-block:: bash
@@ -152,7 +149,7 @@ Read Sample from an Input File
     prompt> challenge Challenge1 --file ~/Downloads/data.txt
     [the result output goes here]
 
-Storing Data and Results
+Storing data and results
 ------------------------
 
 Did you pass the challenge? Was the online grader content with the upload of `latest.txt`? Then you should store data
@@ -180,7 +177,7 @@ To quickly see all available options.
 
     challenge --help
 
-Naming Conventions
+Naming conventions
 ==================
 
 The naming conventions follow the standards as defined by `PEP 8`_ **Style Guide for Python Code**
@@ -234,7 +231,7 @@ You can clone (or download) the Challenges project directly from Github. In this
 configured globally. Either you configure it globally or you place your challenges immediately into the projects folder
 so that the paths are detected relatively.
 
-Put Your Challenges Immediately Into the Projects Folder
+Put your challenges immediately into the projects folder
 ........................................................
 
 This is the most simple setup to get started. After downloading change into the download folder an try to run the
@@ -255,7 +252,7 @@ Now you are ready to create your challenge side-by-side with the `HelloWorld` ch
 
     prompt> bin/challenge --scaffold MyChallenge
 
-Use <pip> to Install <challenges>
+Use <pip> to install <challenges>
 ---------------------------------
 
 If you have a fully configured python 3 environment up and running you can install <challenges> with pip3.

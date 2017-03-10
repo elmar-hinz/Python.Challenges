@@ -19,13 +19,13 @@ challenges you will overwrite or extend other parts of the parent class.
 
 Have a look into the parent class, especially into the <main> function, that
 controls the execution of the challenge. Also have a look into the parents
-<__init__> method to see what instance variables are already prepared to serve
+<__init__> method to see what instance attributes are already prepared to serve
 the communication of the methods.
 
-By the class variable <sample> a minimal example of the possible input is
+By the class attribute <sample> a minimal example of the possible input is
 given. This is recommended for every challenge. It is useful during
-development or for smoke tests. Otherwise this class variable
-will be overwritten by injection of an instance variable of the same name.
+development or for smoke tests. Otherwise this class attribute
+will be overwritten by injection of an instance attribute of the same name.
 """
 
 from challenges import Challenge
