@@ -12,10 +12,10 @@ HelloWorld.challenge module
     :undoc-members:
     :show-inheritance:
 
-HelloWorld.testcase module
---------------------------
+HelloWorld.test module
+----------------------
 
-.. automodule:: HelloWorld.testcase
+.. automodule:: HelloWorld.test
     :members:
     :undoc-members:
     :show-inheritance:

@@ -11,23 +11,20 @@ import math
 class Challenge:
     """Base class of all challenges
 
-    Designe concept is the Template Method Design Pattern (GOF).
+    Design concept is the Template Method Design Pattern (GOF).
 
-    Attributes
-    ----------
+    Attributes:
 
     :sample:    The input of the challenge.
     :output:    The output of the challenge
 
-    Workflow
-    --------
+    Workflow:
 
     The `main` method controls the overall workflow by calling the worker
     methods. This is the common character of all challenges.
     The base class controls the workflow of the derived workers.
 
-    Workers
-    -------
+    Workers:
 
     The worker methods need to be implemented by the inheriting class.
 
@@ -36,15 +33,13 @@ class Challenge:
     :calc:     Run the main algorithm of the challenge.
     :format:   Create the output string required by the grader.
 
-    Library
-    -------
+    Library:
 
     The other methods support the implementation of the workers. They address
     the extraction of data from the input lines or the formatting of the
     output.
 
-    Sample
-    ------
+    Sample:
 
     The attribute `sample` is both used as class and as instance attribute.
     When the instance attribute is injected it shadows the class attribute. By

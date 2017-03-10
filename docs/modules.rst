@@ -6,3 +6,4 @@ API
 
    HelloWorld
    challenges
+   tests

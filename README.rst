@@ -25,9 +25,9 @@ A Minimal Hello World Class <Add>
 
 .. code-block:: python
 
-    from challenges.challenge import Challenge
+    from challenges import Challenge
 
-    class Add(Challenge):
+    class AddChallenge(Challenge):
         sample = '''
             5, 6
         '''
@@ -41,16 +41,16 @@ A Minimal Hello World Class <Add>
 The class to write lets you focus on the core algorithms of the challenge while keeping stuff like opening, reading and
 writing of files out of the way. You inherit several methods to set up the model or to format your result for writing.
 
-While the class variable `sample` just holds a minimal example of the input, the actual input is later injected by
+While the class attribute `sample` just holds a minimal example of the input, the actual input is later injected by
 the **Challenge Runner** via the command line. In Bioinformatics this is often a large file of DNA.
 
 .. hint:: See a more verbose example of HelloWorld.
 
-    * HelloWorld_
-    * HelloWorldTestCase_
+    * HelloWorldChallenge_
+    * HelloWorldTest_
 
-.. _HelloWorld: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/HelloWorld.py
-.. _HelloWorldTestCase: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/HelloWorldTestCase.py
+.. _HelloWorldChallenge: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/challenge.py
+.. _HelloWorldTest: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/test.py
 
 
 The Challenge Runner Supports the Following Features
@@ -71,9 +71,9 @@ The Layout of Your Directory Looks Like This
 
     myChallenges/
         Challenge1/challenge.py
-        Challenge1/testcase.py
+        Challenge1/test.py
         Challenge2/challenge.py
-        Challenge2/testcase.py
+        Challenge2/test.py
         ... more challenges ...
 
 The names `Challenge1` and `Challenge2` are just placeholders for the names you choose during scaffolding.
@@ -108,7 +108,7 @@ You now find the files:
 
     myChallenges/
         Challenge3/challenge.py
-        Challenge3/testcase.py
+        Challenge3/test.py
         Challenge3/__init__.py
 
 Check it's working by running the unit test case.
@@ -193,7 +193,15 @@ There are two deliberate exceptions:
 
     In contradiction to the style guide directories of the challenges are not all lowercase. Especially the
     first character must be uppercase. This is used to find and list the challenge directories between other modules.
-    The directory and the class name must use the same word, with the `.py` extension for the file.
+    If the name of your challenge is **ExampleProblem** then this are the required names:
+
+    :Directory: ``ExampleProblem/``
+    :Challenge file: ``ExampleProblem/challenge.py``
+    :Unittest file: ``ExampleProblem/test.py``
+    :Full qualified challenge class: ``ExampleProblem.challenge.ExampleProblemChallenge``
+    :Full qualified test class: ``ExampleProblem.test.ExampleProblemTest``
+
+    This is automatially wired up during scaffolding.
 
 2. Inherited class attributes and methods don't have a leading underscore:
 
@@ -203,14 +211,14 @@ There are two deliberate exceptions:
 
 .. tip::
 
-    On useful advantage of naming the directory just like your challenge class is, that you can use the path expansion
-    mechanism of the shell. Write the first characters of the class/directory name and hit <TAB>. Now you can use the
+    On useful advantage of naming the directory just like your challenge is, that you can use the path expansion
+    mechanism of the shell. Write the first characters of the directory name and hit <TAB>. Now you can use the
     directory name as name of the challenge. A trailing slash is discarded. The following two inputs are equivalent.
 
     .. code-block:: bash
 
-        prompt> challenge -k HelloWorld
-        prompt> challenge -k HelloWorld/
+        prompt> challenge -k ExampleProblem
+        prompt> challenge -k ExampleProblem/
 
 Installation
 ============
