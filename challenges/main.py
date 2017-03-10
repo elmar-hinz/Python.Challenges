@@ -1,6 +1,5 @@
-from challenges.conf import Conf
-from challenges.runner import Runner
-
+from challenges import Conf
+from challenges import Runner
 
 def main():
     Runner(Conf()).main()

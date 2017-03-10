@@ -2,8 +2,7 @@ import sys
 import time
 import unittest
 
-from challenges.scaffold import Scaffold
-
+from challenges import Scaffold
 
 class Runner:
     def __init__(self, conf):

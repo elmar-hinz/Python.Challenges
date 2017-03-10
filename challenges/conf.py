@@ -42,7 +42,7 @@ class Conf:
         if len(sys.argv) == 1:
             self.print_help()
         self.args = self.parser.parse_args()
-        if self.args.challenge[-1:] == '/':
+        if self.args.challenge and self.args.challenge[-1:] == '/':
             self.args.challenge = self.args.challenge[0:-1]
 
     def print_help(self):

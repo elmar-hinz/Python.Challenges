@@ -35,8 +35,8 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'challenge=challenges.main:main',
-            'stepik=challenges.main:main',
+            'challenge=challenges:main',
+            'stepik=challenges:main',
         ],
     },
     scripts=['bin/challenge'],
