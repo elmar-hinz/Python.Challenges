@@ -36,34 +36,48 @@ class Scaffold:
 
     def get_class_content(self):
         text = '''
-from challenges.challenge import Challenge
+from challenges import Challenge
 
-class {}(Challenge):
+class {}Challenge(Challenge):
 
-    sample = '43'
+    sample = '33'
 
     def build(self):
-        self.model.number = self.lineToIntegers(0)[0]
+        self.model.number = self.line_to_integers(0)[0]
 
     def calc(self):
         self.result = self.model.number
 '''
-        return text.strip().format(self.conf.get_challenge_class())
+        return text.strip().format(self.conf.get_challenge_name())
 
     def get_unittest_content(self):
         text = '''
 import unittest
-from {}.challenge import {}
+from {}.challenge import {}Challenge
 
-class {}TestCase(unittest.TestCase):
+class {}Test(unittest.TestCase):
 
     def setUp(self):
-        self.challenge = {}()
-        self.challenge.read()
+        self.challenge = {}Challenge()
 
     def test__init__(self):
-        self.assertIsInstance(self.challenge, {})
+        self.assertIsInstance(self.challenge, {}Challenge)
+
+    def test_build(self):
+        self.challenge.lines = ['11']
+        self.challenge.build()
+        self.assertEqual(11, self.challenge.model.number)
+
+    def test_calc(self):
+        self.challenge.model.number = 22
+        self.challenge.calc()
+        self.assertEqual(22, self.challenge.result)
+
+    def test_format(self):
+        self.challenge.result = 33
+        self.challenge.format()
+        self.assertEqual('33', self.challenge.output)
 
 '''
-        c = self.conf.get_challenge_class()
-        return text.strip().format(c, c, c, c, c)
+        n = self.conf.get_challenge_name()
+        return text.strip().format(n, n, n, n, n)

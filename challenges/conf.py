@@ -58,7 +58,7 @@ class Conf:
 
     def get_unittest_file(self):
         challenge = self.args.challenge
-        return self.root + '/' + challenge + '/testcase.py'
+        return self.root + '/' + challenge + '/test.py'
 
     def get_input_file(self):
         return os.path.realpath(self.args.file)
@@ -82,22 +82,22 @@ class Conf:
                 if d[0:1] == d[0:1].upper() and d[0:1] != '_'
                 ]
 
-    def get_challenge_class(self):
+    def get_challenge_name(self):
         return self.args.challenge
 
-    def get_full_qualified_challenge_class(self):
-        challenge = self.args.challenge
-        return challenge + '.challenge.' + challenge
+    def get_full_qualified_challenge_name(self):
+        challenge = self.get_challenge_name()
+        return challenge + '.challenge.' + challenge + 'Challenge'
 
-    def get_full_qualified_unittest_class(self):
-        challenge = self.args.challenge
-        return (challenge + '.testcase.' + challenge + 'TestCase')
+    def get_full_qualified_unittest_name(self):
+        challenge = self.get_challenge_name()
+        return (challenge + '.test.' + challenge + 'Test')
 
     def get_challenge(self):
-        return self.get_class(self.get_full_qualified_challenge_class())()
+        return self.get_class(self.get_full_qualified_challenge_name())()
 
     def get_unittest(self):
-        return self.get_class(self.get_full_qualified_unittest_class())
+        return self.get_class(self.get_full_qualified_unittest_name())
 
     @staticmethod
     def get_class(class_):

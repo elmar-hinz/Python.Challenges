@@ -1,14 +1,13 @@
 import unittest
 
-from .challenge import HelloWorld
+from HelloWorld.challenge import HelloWorldChallenge
 
-
-class HelloWorldTestCase(unittest.TestCase):
+class HelloWorldTest(unittest.TestCase):
     def setUp(self):
-        self.challenge = HelloWorld()
+        self.challenge = HelloWorldChallenge()
 
     def test__init__(self):
-        self.assertIsInstance(self.challenge, HelloWorld)
+        self.assertIsInstance(self.challenge, HelloWorldChallenge)
 
     def test_build(self):
         self.challenge.lines = ['5', 'xxx']

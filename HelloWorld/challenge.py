@@ -28,10 +28,10 @@ development or for smoke tests. Otherwise this class variable
 will be overwritten by injection of an instance variable of the same name.
 """
 
-from challenges.challenge import Challenge
+from challenges import Challenge
 
 
-class HelloWorld(Challenge):
+class HelloWorldChallenge(Challenge):
     """This is the HelloWorld Challenge class.
 
     This challenge takes a word as input and a number at which position
