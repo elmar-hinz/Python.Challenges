@@ -104,7 +104,7 @@ class ChallengeTestCase(unittest.TestCase):
         self.challenge.read()
         result = self.challenge.read_edges(start=2, stop=4)
         self.assertEqual(result.__name__, 'read_edges')
-        self.assertEqual(len(list(result)),2)
+        self.assertEqual(len(list(result)), 2)
 
     def test_read_edges_from(self):
         """Show reading edges self limiting."""
@@ -118,7 +118,7 @@ class ChallengeTestCase(unittest.TestCase):
         '''
         self.challenge.read()
         result = self.challenge.read_edges(start=2)
-        self.assertEqual(len(list(result)),3)
+        self.assertEqual(len(list(result)), 3)
 
     def test_read_edges_without_given_range(self):
         """Show reading edges without given range starting from line 0."""
@@ -129,17 +129,16 @@ class ChallengeTestCase(unittest.TestCase):
         '''
         self.challenge.read()
         result = self.challenge.read_edges()
-        self.assertEqual(len(list(result)),3)
+        self.assertEqual(len(list(result)), 3)
 
     def test_format_list_of_integers(self):
-        """Show conatination of list of integers."""
+        """Show concatenation of list of integers."""
         self.assertEqual(self.challenge.format_list_of_integers([1, 2]),
                          '1, 2')
 
     def test_format_path(self):
-        """Show conatination of list of nodes to a path."""
+        """Show concatenation of list of nodes to a path."""
         result = self.challenge.format_path([11, 22, 33])
         self.assertEqual(result, '11->22->33')
         result = self.challenge.format_path([11, 22, 33], backwards=True)
         self.assertEqual(result, '11<-22<-33')
-

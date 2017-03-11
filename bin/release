@@ -5,7 +5,7 @@ import shutil
 
 
 def main():
-    # pathes
+    # paths
     here = os.path.abspath(os.path.dirname(__file__))
     root = os.path.abspath(os.path.join(here, '..'))
     sphinx = os.path.join(root, 'docs/')
@@ -17,10 +17,10 @@ def main():
     epub_target = os.path.join(docs, 'epub/')
 
     # commands
-    genapi = 'sphinx-apidoc --doc-project="API" --force -o docs . setup.py'
-    genhtml = 'make html'
-    genepub = 'make epub'
-    gendist = './setup.py sdist'
+    gen_api = 'sphinx-apidoc --doc-project="API" --force -o docs . setup.py'
+    gen_html = 'make html'
+    gen_epub = 'make epub'
+    gen_dist = './setup.py sdist'
     test = 'twine upload dist/* -r testpypi'
     upload = 'twine upload dist/* -r pypi'
 
@@ -38,20 +38,20 @@ def main():
         os.makedirs(dist)
 
     with cd(root):
-        os.system(genapi)
+        os.system(gen_api)
 
     with cd(sphinx):
-        os.system(genhtml)
+        os.system(gen_html)
 
     os.rename(html_source, html_target)
 
     with cd(sphinx):
-        os.system(genepub)
+        os.system(gen_epub)
 
     os.rename(epub_source, epub_target)
 
     with cd(root):
-        os.system(gendist)
+        os.system(gen_dist)
 
     # Upload test
     print('Trying upload on TESTPYPI')
@@ -70,8 +70,8 @@ def main():
 class cd:
     """Context manager for changing the current working directory"""
 
-    def __init__(self, newPath):
-        self.newPath = os.path.realpath(newPath)
+    def __init__(self, new_path):
+        self.newPath = os.path.realpath(new_path)
 
     def __enter__(self):
         self.savedPath = os.getcwd()

@@ -22,7 +22,7 @@ setup(
                 + 'of solutions for coding challenges like those on '
                   'stepik.org',
     long_description=long_description,
-    keywords='education stepik coursera bioinformatics challenges',
+    keywords='education challenges bioinformatics Coursera Stepik',
     url='https://github.com/elmar-hinz/Python.Challenges',
     author='Elmar Hinz',
     author_email='t3elmar@gmail.com',

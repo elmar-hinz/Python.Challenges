@@ -196,12 +196,8 @@ class Challenge:
         The number of the line is selected by line_nr.
         The split behaviour can be adjusted by changing self.edge_pattern.
         """
-        print(self.edge_pattern)
-        print(self.line(nr))
-        m = re.compile(self.edge_pattern).match(self.line(nr))
-        print(m)
-        return self._to_edge(re.compile(self.edge_pattern).match(
-            self.line(nr)))
+        match = re.compile(self.edge_pattern).match(self.line(nr))
+        return self._to_edge(match)
 
     def read_edges(self, start=0, stop=None):
         """Generator to read edges from lines.
@@ -216,7 +212,7 @@ class Challenge:
         lines are used as long as they match the edge_pattern reg expression.
         The split behaviour can be adjusted by the self.edge_pattern.
         """
-        if stop == None:
+        if stop is None:
             stop = math.inf
         nr = start
         while nr < stop:
@@ -229,8 +225,9 @@ class Challenge:
                 yield (self._to_edge(match))
                 nr += 1
             else:
-                break # If edges end before stop, wich may be infinity
+                break  # If edges end before stop, which may be infinity
 
+    # noinspection PyMethodMayBeStatic
     def _to_edge(self, match):
         edge = types.SimpleNamespace()
         edge.tail = int(match.group(1))
@@ -243,6 +240,7 @@ class Challenge:
     # Formatting
     # --------------------------------------------------
 
+    # noinspection PyMethodMayBeStatic
     def format_list_of_integers(self, integers, joint=', '):
         """Join a list of integers to a string
 
@@ -256,10 +254,8 @@ class Challenge:
         The joint is -> by default. If the parameter
         backwards is True the joint is <-.
         """
-        if backwards == True:
+        if backwards:
             joint = '<-'
         else:
             joint = '->'
         return self.format_list_of_integers(integers, joint)
-
-

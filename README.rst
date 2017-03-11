@@ -198,7 +198,7 @@ There are two deliberate exceptions:
     :Full qualified challenge class: ``ExampleProblem.challenge.ExampleProblemChallenge``
     :Full qualified test class: ``ExampleProblem.test.ExampleProblemTest``
 
-    This is automatially wired up during scaffolding.
+    This is automatically wired up during scaffolding.
 
 2. Inherited class attributes and methods don't have a leading underscore:
 

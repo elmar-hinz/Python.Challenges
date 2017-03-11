@@ -61,6 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Challenges'
+# noinspection PyShadowingBuiltins
 copyright = u'2017, Elmar Hinz'
 author = u'Elmar Hinz'
 
@@ -157,8 +158,8 @@ html_theme = 'alabaster'
 # html_logo = None
 
 # The name of an image file (relative to this directory) to use as a favicon of
-# the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or
+# 32x32 pixels large.
 #
 # html_favicon = None
 

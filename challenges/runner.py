@@ -4,6 +4,7 @@ import unittest
 
 from challenges import Scaffold
 
+
 class Runner:
     def __init__(self, conf):
         self.start = time.time()

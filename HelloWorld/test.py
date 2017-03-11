@@ -2,6 +2,7 @@ import unittest
 
 from HelloWorld.challenge import HelloWorldChallenge
 
+
 class HelloWorldTest(unittest.TestCase):
     def setUp(self):
         self.challenge = HelloWorldChallenge()

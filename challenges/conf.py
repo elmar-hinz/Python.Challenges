@@ -91,7 +91,7 @@ class Conf:
 
     def get_full_qualified_unittest_name(self):
         challenge = self.get_challenge_name()
-        return (challenge + '.test.' + challenge + 'Test')
+        return challenge + '.test.' + challenge + 'Test'
 
     def get_challenge(self):
         return self.get_class(self.get_full_qualified_challenge_name())()
