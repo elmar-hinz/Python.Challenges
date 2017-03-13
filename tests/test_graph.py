@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 
 from challenges import Graph, Node, Edge
 
 
-class NodeTestCase(unittest.TestCase):
+class TestNode(TestCase):
     """Test units of Node."""
 
     def setUp(self):
@@ -26,8 +26,22 @@ class NodeTestCase(unittest.TestCase):
         self.assertIn(edge, tail.outgoing)
         self.assertIn(edge, head.incoming)
 
+    def test_antecessors(self):
+        n1, n3 = Node(1), Node(3)
+        self.node.add_edge(Edge(n1, self.node))
+        self.node.add_edge(Edge(n3, self.node))
+        self.assertIn(n1, self.node.antecessors())
+        self.assertIn(n3, self.node.antecessors())
 
-class EdgeTestCase(unittest.TestCase):
+    def test_successors(self):
+        n1, n3 = Node(1), Node(3)
+        self.node.add_edge(Edge(self.node, n1))
+        self.node.add_edge(Edge(self.node, n3))
+        self.assertIn(n1, self.node.successors())
+        self.assertIn(n3, self.node.successors())
+
+
+class TestEdge(TestCase):
     """Test units of Node."""
 
     def setUp(self):
@@ -46,7 +60,7 @@ class EdgeTestCase(unittest.TestCase):
         self.assertEqual(self.edge.any, 5)
 
 
-class GraphTestCase(unittest.TestCase):
+class TestGraph(TestCase):
     """Test units of Graph."""
 
     def setUp(self):
@@ -75,6 +89,36 @@ class GraphTestCase(unittest.TestCase):
         self.assertIn(edge, edge.tail.outgoing)
         self.assertIn(edge, edge.head.incoming)
 
+    def test_create_edge_from_nodes(self):
+        node1 = self.graph.create_node(1)
+        node2 = self.graph.create_node(2)
+        edge = self.graph.create_edge(node1, node2)
+        self.assertIs(node1, edge.tail)
+        self.assertIs(node2, edge.head)
+
     def test_get_node(self):
         node = self.graph.create_node(3)
-        self.assertIs(self.graph.get_node(3), node)
+        self.assertIs(self.graph.node(3), node)
+
+    def test_nodes_are_returned_in_order(self):
+        node2 = self.graph.create_node(2)
+        node3 = self.graph.create_node(3)
+        node1 = self.graph.create_node(1)
+        nodes = self.graph.nodes()
+        self.assertEqual(3, len(nodes))
+        self.assertIs(nodes[0], node1)
+        self.assertIs(nodes[1], node2)
+        self.assertIs(nodes[2], node3)
+
+    def test_keys_are_returned_ordered(self):
+        self.graph.create_node(4)
+        self.graph.create_node(8)
+        self.graph.create_node(3)
+        self.assertEqual(self.graph.keys(), [3, 4, 8])
+
+    def test_count_of_nodes(self):
+        self.graph.create_node(2)
+        self.graph.create_node(3)
+        self.assertEqual(2, self.graph.count())
+
+

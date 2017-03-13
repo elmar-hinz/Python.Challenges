@@ -27,10 +27,19 @@ class Node:
                 'The node is neither head nor tail of the edge.'
             )
 
+    def antecessors(self):
+        return (edge.tail for edge in self.incoming)
+
+    def successors(self):
+        return (edge.head for edge in self.outgoing)
+
     def __str__(self):
         pre = str([edge.tail.id for edge in self.incoming])
         post = str([edge.head.id for edge in self.outgoing])
         return '{}->({})->{}'.format(pre, self.id, post)
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class Edge:
@@ -47,7 +56,8 @@ class Edge:
         return self._head
 
     def __str__(self):
-        return '({})->({})'.format( self.tail.id, self.head.id )
+        return '({})->({})'.format(self.tail.id, self.head.id)
+
 
 # noinspection PyShadowingBuiltins
 class Graph:
@@ -67,14 +77,35 @@ class Graph:
         """Add an edge and return it.
 
         Create nodes as necessary.
+
+        :tail: Node or id of node
+        :head: Node or id of node
         """
-        tail_node = self.create_node(tail)
-        head_node = self.create_node(head)
+        if isinstance(tail, Node):
+            tail_node = tail
+        else:
+            tail_node = self.create_node(tail)
+        if isinstance(head, Node):
+            head_node = head
+        else:
+            head_node = self.create_node(head)
         edge = Edge(tail_node, head_node)
         tail_node.add_edge(edge)
         head_node.add_edge(edge)
         return edge
 
-    def get_node(self, id):
+    def node(self, id):
         """Return a node by id."""
         return self._nodes[id]
+
+    def nodes(self):
+        """Return nodes a sorted list by keys."""
+        return list(self._nodes[key] for key in sorted(self._nodes))
+
+    def keys(self):
+        """Return keys of nodes in sorted order."""
+        return sorted(self._nodes)
+
+    def count(self):
+        """Return count of nodes."""
+        return len(self._nodes)
