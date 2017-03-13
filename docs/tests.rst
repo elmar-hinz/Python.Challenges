@@ -12,6 +12,14 @@ tests.test_challenge module
     :undoc-members:
     :show-inheritance:
 
+tests.test_graph module
+-----------------------
+
+.. automodule:: tests.test_graph
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
