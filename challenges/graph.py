@@ -1,23 +1,40 @@
 # noinspection PyShadowingBuiltins
 class Node:
     def __init__(self, id):
+        """ Create a node.
+
+        Not for direct usage. To create node and edges use:
+
+            * Graph.create_node()
+            * Graph.create_edge()
+        """
         self._id = id
         self._incoming = []
         self._outgoing = []
 
     @property
     def id(self):
+        """ Return the nodes id."""
         return self._id
 
     @property
     def incoming(self):
+        """ Return the incoming EDGES of the node. """
         return self._incoming
 
     @property
     def outgoing(self):
+        """ Return the outgoing EDGES of the node. """
         return self._outgoing
 
     def add_edge(self, edge):
+        """ Add an edge to the node.
+
+        Not for direct usage. To create node and edges use:
+
+            * Graph.create_node()
+            * Graph.create_edge()
+        """
         if self is edge.head:
             self._incoming.append(edge)
         elif self is edge.tail:
@@ -28,34 +45,54 @@ class Node:
             )
 
     def antecessors(self):
+        """ Return the incoming NODES of the node.
+
+        The tail nodes of all incoming edges.
+        """
         return (edge.tail for edge in self.incoming)
 
     def successors(self):
+        """ Return the outgoing NODES of the node.
+
+        The head nodes of all outgoing edges.
+        """
         return (edge.head for edge in self.outgoing)
 
     def __str__(self):
+        """ Return a human readable string representation of the node. """
         pre = str([edge.tail.id for edge in self.incoming])
         post = str([edge.head.id for edge in self.outgoing])
         return '{}->({})->{}'.format(pre, self.id, post)
 
     def __repr__(self):
+        """ Return a human readable string representation of the node. """
         return self.__str__()
 
 
 class Edge:
     def __init__(self, tail, head):
+        """ Create an edge.
+
+        Not for direct usage. To create node and edges use:
+
+            * Graph.create_node()
+            * Graph.create_edge()
+        """
         self._tail = tail
         self._head = head
 
     @property
     def tail(self):
+        """ Return the tail node. """
         return self._tail
 
     @property
     def head(self):
+        """ Return the head node. """
         return self._head
 
     def __str__(self):
+        """ Return a human readable string representation of the edge. """
         return '({})->({})'.format(self.tail.id, self.head.id)
 
 
@@ -99,7 +136,7 @@ class Graph:
         return self._nodes[id]
 
     def nodes(self):
-        """Return nodes a sorted list by keys."""
+        """Return all nodes sorted by node id."""
         return list(self._nodes[key] for key in sorted(self._nodes))
 
     def keys(self):
