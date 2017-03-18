@@ -131,6 +131,101 @@ class ChallengeTestCase(unittest.TestCase):
         result = self.challenge.read_edges()
         self.assertEqual(len(list(result)), 3)
 
+    def test_read_fasta_from_to(self):
+        """Show reading FASTA limited by start and stop."""
+        self.challenge.sample = '''
+        0
+        1
+        >FAS_1
+        CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC
+        TCCCACTAATAATTCTGAGG
+        >FAS_2
+        CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT
+        ATATCCATTTGTCAGCAGACACGC
+        >FAS_3
+        CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+        TGGGAACCTGCGGGCAGTAGGTGGAAT
+        >FAS_4
+        CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+        TGGGAACCTGCGGGCAGTAGGTGGAAT
+        14
+        '''
+        self.challenge.read()
+        result = self.challenge.read_fasta(start=5, stop=11)
+        self.assertEqual(result.__name__, 'read_fasta')
+        self.assertEqual(len(list(result)), 2)
+
+    def test_read_fasta_from(self):
+        """Show reading FASTA self limiting."""
+        self.challenge.sample = '''
+        0
+        1
+        >FAS_1
+        CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC
+        TCCCACTAATAATTCTGAGG
+        >FAS_2
+        CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT
+        ATATCCATTTGTCAGCAGACACGC
+        >FAS_3
+        CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+        TGGGAACCTGCGGGCAGTAGGTGGAAT
+        >FAS_4
+        AAA
+        TTT
+        14
+        '''
+        self.challenge.read()
+        result = self.challenge.read_fasta(start=5)
+        self.assertEqual(result.__name__, 'read_fasta')
+        fasta = dict(result)
+        self.assertEqual('AAATTT', fasta['FAS_4'])
+        self.assertEqual(len(fasta), 3)
+
+    def test_read_fasta_without_given_range(self):
+        """Show reading FASTA limited by start and stop."""
+        self.challenge.sample = '''
+        >FAS_1
+        CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC
+        TCCCACTAATAATTCTGAGG
+        >FAS_2
+        CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT
+        ATATCCATTTGTCAGCAGACACGC
+        >FAS_3
+        CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+        TGGGAACCTGCGGGCAGTAGGTGGAAT
+        >FAS_4
+        CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+        TGGGAACCTGCGGGCAGTAGGTGGAAT
+        '''
+        self.challenge.read()
+        result = self.challenge.read_fasta()
+        self.assertEqual(result.__name__, 'read_fasta')
+        self.assertEqual(len(list(result)), 4)
+
+    def test_read_fasta_format(self):
+        """Show reading FASTA matches expected format."""
+        self.challenge.sample = '''
+        0
+        1
+        >FAS_1
+        LLL
+        ---
+        MMM
+        *
+        >FAS_2
+        AAA
+        TTT
+        8
+        '''
+        self.challenge.read()
+        result = self.challenge.read_fasta(start=2)
+        self.assertEqual(result.__name__, 'read_fasta')
+        fasta = dict(result)
+        self.assertIn('FAS_1', fasta.keys())
+        self.assertEqual('LLL---MMM*', fasta['FAS_1'])
+        self.assertIn('FAS_2', fasta.keys())
+        self.assertEqual('AAATTT', fasta['FAS_2'])
+
     def test_format_list_of_integers(self):
         """Show concatenation of list of integers."""
         self.assertEqual(self.challenge.format_list_of_integers([1, 2]),

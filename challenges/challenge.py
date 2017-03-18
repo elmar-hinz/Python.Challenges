@@ -81,6 +81,8 @@ class Challenge:
     May need adjustment for different kind of edge input formats.
     """
 
+    fasta_pattern = '^[\-\*A-Z]+$'
+
     def __init__(self):
         self.lines = []
         """A list of lines that will be filled by the method read()."""
@@ -210,7 +212,7 @@ class Challenge:
         The line to start is set by the parameter start. It defaults to zero.
         The line to stop is set by the parameter stop. When it is not provided
         lines are used as long as they match the edge_pattern reg expression.
-        The split behaviour can be adjusted by the self.edge_pattern.
+        The match behaviour can be adjusted by the self.edge_pattern.
         """
         if stop is None:
             stop = math.inf
@@ -226,6 +228,44 @@ class Challenge:
                 nr += 1
             else:
                 break  # If edges end before stop, which may be infinity
+
+    def read_fasta(self, start=0, stop=None):
+        """Generator to read FASTA formatted samples.
+
+        Reads multiple fasta sequences and yields them.
+
+        By the start and stop parameters a range can be given.
+        The stop parameter is the index behind the last line to use.
+
+        The line to start is set by the parameter start. It defaults to zero.
+        The line to stop is set by the parameter stop. When it is not provided
+        lines are used as long as they match the FASTA format.
+        The match behaviour can be adjusted by the self.fasta_pattern.
+        """
+        name, sequence = '', ''
+        if stop is None:
+            stop = math.inf
+        nr = start
+        while nr < stop:
+            try:
+                line = self.line(nr)
+            except IndexError:
+                break
+            if line.startswith('>'):
+                if name != '' and sequence != '':
+                    # Yield previous sequence if any
+                    yield name, sequence
+                name, sequence = line[1:], ''  # Reset
+            else:
+                match = re.compile(self.fasta_pattern).match(line)
+                if match:
+                    sequence += line
+                else:
+                    break  # If edges end before stop, which may be infinity
+            nr += 1
+        # Yield final sequence
+        yield name, sequence
+
 
     # noinspection PyMethodMayBeStatic
     def _to_edge(self, match):
