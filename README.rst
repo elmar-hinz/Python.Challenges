@@ -69,13 +69,19 @@ Directory layout
 .. code-block:: bash
 
     anyDirectory/
+        Challenge1/__init__.py
         Challenge1/challenge.py
         Challenge1/test.py
+        Challenge2/__init__.py
         Challenge2/challenge.py
         Challenge2/test.py
         ... more challenges ...
 
 The names `Challenge1` and `Challenge2` are just placeholders for the names you choose during scaffolding.
+
+.. hint::
+
+    The files `__init__.py` are empty. They help unittest tools like *nosetest* to locate the test files.
 
 Challenge runner
 ================
@@ -105,6 +111,7 @@ You now find the files:
 .. code-block:: bash
 
     myChallenges/
+        Challenge3/__init__.py
         Challenge3/challenge.py
         Challenge3/test.py
 
@@ -113,11 +120,12 @@ Check it's working by running the unit test case.
 .. code-block:: bash
 
     prompt> challenge --unittest Challenge3
-    ...
+    .sss.
     ----------------------------------------------------------------------
-    Ran 1 tests in 0.001s
+    Ran 5 tests in 0.006s
 
-    OK
+    OK (skipped=3)
+
 
 Run <sample> from the class file
 --------------------------------
