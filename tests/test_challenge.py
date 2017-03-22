@@ -1,4 +1,5 @@
 import unittest
+
 from types import SimpleNamespace
 
 from challenges import Challenge
@@ -102,8 +103,8 @@ class ChallengeTestCase(unittest.TestCase):
         5
         '''
         self.challenge.read()
-        result = self.challenge.read_edges(start=2, stop=4)
-        self.assertEqual(result.__name__, 'read_edges')
+        result = self.challenge.edges(start=2, stop=4)
+        self.assertEqual(result.__name__, 'edges')
         self.assertEqual(len(list(result)), 2)
 
     def test_read_edges_from(self):
@@ -117,7 +118,7 @@ class ChallengeTestCase(unittest.TestCase):
         5
         '''
         self.challenge.read()
-        result = self.challenge.read_edges(start=2)
+        result = self.challenge.edges(start=2)
         self.assertEqual(len(list(result)), 3)
 
     def test_read_edges_without_given_range(self):
@@ -128,7 +129,7 @@ class ChallengeTestCase(unittest.TestCase):
         3->9
         '''
         self.challenge.read()
-        result = self.challenge.read_edges()
+        result = self.challenge.edges()
         self.assertEqual(len(list(result)), 3)
 
     def test_read_fasta_from_to(self):
@@ -151,8 +152,8 @@ class ChallengeTestCase(unittest.TestCase):
         14
         '''
         self.challenge.read()
-        result = self.challenge.read_fasta(start=5, stop=11)
-        self.assertEqual(result.__name__, 'read_fasta')
+        result = self.challenge.fasta(start=5, stop=11)
+        self.assertEqual(result.__name__, 'fasta')
         self.assertEqual(len(list(result)), 2)
 
     def test_read_fasta_from(self):
@@ -175,8 +176,8 @@ class ChallengeTestCase(unittest.TestCase):
         14
         '''
         self.challenge.read()
-        result = self.challenge.read_fasta(start=5)
-        self.assertEqual(result.__name__, 'read_fasta')
+        result = self.challenge.fasta(start=5)
+        self.assertEqual(result.__name__, 'fasta')
         fasta = dict(result)
         self.assertEqual('AAATTT', fasta['FAS_4'])
         self.assertEqual(len(fasta), 3)
@@ -198,8 +199,8 @@ class ChallengeTestCase(unittest.TestCase):
         TGGGAACCTGCGGGCAGTAGGTGGAAT
         '''
         self.challenge.read()
-        result = self.challenge.read_fasta()
-        self.assertEqual(result.__name__, 'read_fasta')
+        result = self.challenge.fasta()
+        self.assertEqual(result.__name__, 'fasta')
         self.assertEqual(len(list(result)), 4)
 
     def test_read_fasta_format(self):
@@ -218,8 +219,8 @@ class ChallengeTestCase(unittest.TestCase):
         8
         '''
         self.challenge.read()
-        result = self.challenge.read_fasta(start=2)
-        self.assertEqual(result.__name__, 'read_fasta')
+        result = self.challenge.fasta(start=2)
+        self.assertEqual(result.__name__, 'fasta')
         fasta = dict(result)
         self.assertIn('FAS_1', fasta.keys())
         self.assertEqual('LLL---MMM*', fasta['FAS_1'])

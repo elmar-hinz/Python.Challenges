@@ -75,6 +75,7 @@ class {}Test(unittest.TestCase):
     def test__init__(self):
         self.assertIsInstance(self.challenge, {}Challenge)
         self.assertIn('XXX', self.challenge.sample)
+        self.assertIn('XXX', self.challenge.expect)
 
     def test_build(self):
         self.skipTest('Not implemented.')

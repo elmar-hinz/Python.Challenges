@@ -3,9 +3,10 @@
 This module holds the base class of all challenges.
 """
 
-import re
-import types
 import math
+import re
+
+import types
 
 
 class Challenge:
@@ -82,6 +83,10 @@ class Challenge:
     """
 
     fasta_pattern = '^[\-\*A-Z]+$'
+    """Reg expression for FASTA sequences.
+
+    Matches lines holding FASTA sequences.
+    """
 
     def __init__(self):
         self.lines = []
@@ -201,7 +206,7 @@ class Challenge:
         match = re.compile(self.edge_pattern).match(self.line(nr))
         return self._to_edge(match)
 
-    def read_edges(self, start=0, stop=None):
+    def edges(self, start=0, stop=None):
         """Generator to read edges from lines.
 
         Reads a range of lines, one edge per line, and yields the edges.
@@ -229,7 +234,7 @@ class Challenge:
             else:
                 break  # If edges end before stop, which may be infinity
 
-    def read_fasta(self, start=0, stop=None):
+    def fasta(self, start=0, stop=None):
         """Generator to read FASTA formatted samples.
 
         Reads multiple fasta sequences and yields them.
