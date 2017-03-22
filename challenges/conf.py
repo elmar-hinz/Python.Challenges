@@ -56,6 +56,10 @@ class Conf:
         challenge = self.args.challenge
         return self.root + '/' + challenge + '/challenge.py'
 
+    def get_challenge_init_file(self):
+        challenge = self.args.challenge
+        return self.root + '/' + challenge + '/__init__.py'
+
     def get_unittest_file(self):
         challenge = self.args.challenge
         return self.root + '/' + challenge + '/test.py'

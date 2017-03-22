@@ -15,6 +15,17 @@ class Scaffold:
                 os.makedirs(directory)
             except OSError:
                 sys.exit('Sorry, could not create ' + directory + '.')
+
+        file = self.conf.get_challenge_init_file()
+        if os.path.exists(file):
+            sys.exit('File ' + file + ' already exists.')
+        else:
+            try:
+                with open(file, 'w') as handle:
+                    handle.write('')
+            except OSError:
+                sys.exit('Sorry, could not write ' + file + '.')
+
         file = self.conf.get_challenge_file()
         if os.path.exists(file):
             sys.exit('File ' + file + ' already exists.')
@@ -40,13 +51,14 @@ from challenges import Challenge
 
 class {}Challenge(Challenge):
 
-    sample = '33'
+    sample = 'XXX'
+    expect = 'XXX'
 
     def build(self):
-        self.model.number = self.line_to_integers(0)[0]
+        pass
 
     def calc(self):
-        self.result = self.model.number
+        self.result = 'XXX'
 '''
         return text.strip().format(self.conf.get_challenge_name())
 
@@ -62,22 +74,20 @@ class {}Test(unittest.TestCase):
 
     def test__init__(self):
         self.assertIsInstance(self.challenge, {}Challenge)
+        self.assertIn('XXX', self.challenge.sample)
 
     def test_build(self):
-        self.challenge.lines = ['11']
-        self.challenge.build()
-        self.assertEqual(11, self.challenge.model.number)
+        self.skipTest('Not implemented.')
 
     def test_calc(self):
-        self.challenge.model.number = 22
-        self.challenge.calc()
-        self.assertEqual(22, self.challenge.result)
+        self.skipTest('Not implemented.')
 
     def test_format(self):
-        self.challenge.result = 33
-        self.challenge.format()
-        self.assertEqual('33', self.challenge.output)
+        self.skipTest('Not implemented.')
 
+    def test_full_integration(self):
+        self.challenge.main()
+        self.assertEqual(self.challenge.expect, self.challenge.output)
 '''
         n = self.conf.get_challenge_name()
         return text.strip().format(n, n, n, n, n)
