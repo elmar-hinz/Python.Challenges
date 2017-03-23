@@ -3,8 +3,8 @@
 README: Challenges
 ==================
 
-Library to assist programming, testing and execution of solutions for coding
-challenges like those on stepik.org
+Library to assist programming, testing and execution of solutions for coding challenges like those on stepik.org or
+rosalind.info.
 
 Find the full documentation at Readthedocs_.
 
@@ -270,15 +270,17 @@ If you have a fully configured python 3 environment up and running you can insta
     prompt> pip3 search challenges
     prompt> pip3 install challenges
 
-The library will be included into the python class path. The runner will be globally available as `challenge` or
-alternatively as `stepik`.
+The library will be included into the python class path. The runner will be globally available as `challenge`,
+alternatively as `stepik` or `rosalind`.
 
 .. code-block:: bash
 
     prompt> challenge --version
-    challenge 0.1.2
+    challenge 0.6.0
 
     prompt> stepik --version
-    stepik 0.1.2
+    stepik 0.6.0
 
+    prompt> rosalind --version
+    rosalind 0.6.0
 

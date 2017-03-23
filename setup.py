@@ -18,11 +18,11 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='challenges',
     version=version,
-    description='Library to assist programming, testing and execution '
-                + 'of solutions for coding challenges like those on '
-                  'stepik.org',
+    description='Library to assist programming, testing and execution of '
+                'solutions for coding challenges like those on stepik.org or'
+                'rosalind.info',
     long_description=long_description,
-    keywords='education challenges bioinformatics Coursera Stepik',
+    keywords='education challenges bioinformatics Coursera Stepik Rosalind',
     url='https://github.com/elmar-hinz/Python.Challenges',
     author='Elmar Hinz',
     author_email='t3elmar@gmail.com',
@@ -31,12 +31,13 @@ setup(
     package_data={
         'HelloWorld': ['sample.txt', 'result.txt'],
         'challenges': ['version.txt'],
-        },
+    },
     include_package_data=True,
     entry_points={
         'console_scripts': [
             'challenge=challenges:main',
             'stepik=challenges:main',
+            'rosalind=challenges:main',
         ],
     },
     scripts=['bin/challenge'],
