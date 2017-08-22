@@ -47,6 +47,7 @@ class Scaffold:
 
     def get_class_content(self):
         text = '''
+# https://github.com/elmar-hinz/Python.Challenges
 from challenges import Challenge
 
 class {}Challenge(Challenge):
@@ -88,7 +89,7 @@ class {}Test(unittest.TestCase):
 
     def test_full_integration(self):
         self.challenge.main()
-        self.assertEqual(self.challenge.expect, self.challenge.output)
+        self.assertEqual(self.challenge.expectation(), self.challenge.output)
 '''
         n = self.conf.get_challenge_name()
         return text.strip().format(n, n, n, n, n)

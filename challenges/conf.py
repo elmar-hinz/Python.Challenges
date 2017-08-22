@@ -8,7 +8,7 @@ import sys
 class Conf:
     def __init__(self):
         sys.path.insert(0, '.')
-        sys.setrecursionlimit(5000)
+        sys.setrecursionlimit(15000)
         self.root = os.path.realpath('.')
         self.parser = None
         self.args = None

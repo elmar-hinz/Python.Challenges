@@ -6,6 +6,7 @@ from challenges import Challenge
 
 
 class ChallengeTestCase(unittest.TestCase):
+
     """Test cases of the challenge base class."""
 
     def setUp(self):
@@ -13,7 +14,8 @@ class ChallengeTestCase(unittest.TestCase):
 
     def test_class_attributes(self):
         """Check setting of class attributes."""
-        self.assertEqual(Challenge.sample, 'sample')
+        self.assertIn('sample', self.challenge.sample)
+        self.assertIn('expected result', self.challenge.expect)
         self.assertEqual(Challenge.br, '\n', Challenge.br)
         self.assertEqual(Challenge.split_pattern, '\s+|\s?,\s?')
         self.assertEqual(Challenge.edge_pattern, '^(\d+)->(\d+)(:(\d+))?$')
@@ -27,11 +29,19 @@ class ChallengeTestCase(unittest.TestCase):
 
     def test_instance_shadows_class_attribute_of_sample(self):
         """ Show that instance attribute shadows class attribute."""
-        self.assertEqual(Challenge.sample, 'sample')
-        self.assertEqual(self.challenge.sample, 'sample')
+        self.assertIn('sample', Challenge.sample)
+        self.assertIn('sample', self.challenge.sample)
         self.challenge.sample = 'mine'
-        self.assertEqual(Challenge.sample, 'sample')
-        self.assertEqual(self.challenge.sample, 'mine')
+        self.assertIn('sample', Challenge.sample)
+        self.assertIn('mine', self.challenge.sample)
+
+    def test_instance_shadows_class_attribute_of_expect(self):
+        """ Show that instance attribute shadows class attribute."""
+        self.assertIn('expected result', Challenge.expect)
+        self.assertIn('expected result', self.challenge.expect)
+        self.challenge.expect = 'my result'
+        self.assertIn('expected result', Challenge.expect)
+        self.assertIn('my result', self.challenge.expect)
 
     def test_read(self):
         """Show that read creates list of lines."""
@@ -226,6 +236,18 @@ class ChallengeTestCase(unittest.TestCase):
         self.assertEqual('LLL---MMM*', fasta['FAS_1'])
         self.assertIn('FAS_2', fasta.keys())
         self.assertEqual('AAATTT', fasta['FAS_2'])
+
+    def test_fasta_strands(self):
+        """ Check the method works as expected. """
+        self.challenge.sample = '''
+        >FAS_1
+        AAA
+        >FAS_2
+        CCC
+        '''
+        self.challenge.read()
+        result = self.challenge.fasta_strands()
+        self.assertEqual(['AAA', 'CCC'], result)
 
     def test_format_list_of_integers(self):
         """Show concatenation of list of integers."""

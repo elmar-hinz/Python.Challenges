@@ -58,10 +58,25 @@ class Challenge:
 
     """
 
-    sample = 'sample'
-    """Holds a minimal example of the input.
+    sample = '''
+        sample
+        sample
+    '''
+    """Holds a minimal example of the input with additional whitespace.
 
     This class variable should always be preset with a tiny sample of input.
+    Whitespace surrounding lines is for readability. It typically needs to be 
+    stripped to get the actual sample.
+    """
+
+    expect = '''
+        expected result
+        expected result
+    '''
+    """Holds the expected result with additional leading whitespace.
+    
+    Whitespace surrounding lines is for readability. It typically needs to be 
+    stripped to get the actual expactation.
     """
 
     br = '\n'
@@ -135,8 +150,7 @@ class Challenge:
 
         Typically this method can be used as is.
         """
-        lines = self.sample.strip().splitlines()
-        self.lines = [line.strip() for line in lines]
+        self.lines = self.example().splitlines()
 
     def build(self):
         """Set up the model from the input lines.
@@ -171,12 +185,35 @@ class Challenge:
         self.output = str(self.result)
 
     # --------------------------------------------------
-    # Accessing lines
+    # Accessing example and expectation
+    # --------------------------------------------------
+
+    def example(self):
+        """Get the sample, with heading whitespace trimmed"""
+        lines = self.sample.strip().splitlines()
+        return '\n'.join(line.strip() for line in lines)
+
+    def expectation(self):
+        """Get the expecation, with heading whitespace trimmed"""
+        lines = self.expect.strip().splitlines()
+        return '\n'.join(line.strip() for line in lines)
+
+    # --------------------------------------------------
+    # Accessing input lines
     # --------------------------------------------------
 
     def line(self, number):
         """ Return one line by the given number. """
         return self.lines[number]
+
+    def line_to_words(self, line_nr):
+        """ Split one line into  a list of words.
+
+        The number of the line is selected by line_nr.
+        The split behaviour can be adjusted by changing self.split_pattern.
+        """
+
+        return list(re.compile(self.split_pattern).split(self.line(line_nr)))
 
     def line_to_integers(self, line_nr):
         """ Split one line into  a list of integers.
@@ -187,6 +224,14 @@ class Challenge:
 
         return [int(i) for i in
                 re.compile(self.split_pattern).split(self.line(line_nr))]
+
+    def line_to_integer(self, line_nr):
+        """ Return line as integer.
+
+        The number of the line is selected by line_nr.
+        """
+
+        return int(self.line(line_nr))
 
     def line_to_floats(self, line_nr):
         """ Split one line into  a list of floats.
@@ -271,6 +316,12 @@ class Challenge:
         # Yield final sequence
         yield name, sequence
 
+    def fasta_strands(self, start=0, stop=None):
+        """ Get the strands of a fasta read as list.
+
+        Takes the same arguments as self.fasta() and delegates to it.
+        """
+        return list(dict(self.fasta(start, stop)).values())
 
     # noinspection PyMethodMayBeStatic
     def _to_edge(self, match):

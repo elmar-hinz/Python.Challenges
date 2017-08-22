@@ -1,5 +1,5 @@
-from challenges import Conf
-from challenges import Runner
+from challenges.conf import Conf
+from challenges.runner import Runner
 
 
 def main():

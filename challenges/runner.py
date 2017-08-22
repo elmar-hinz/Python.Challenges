@@ -2,7 +2,7 @@ import sys
 import time
 import unittest
 
-from challenges import Scaffold
+from challenges.scaffold import Scaffold
 
 
 class Runner:
