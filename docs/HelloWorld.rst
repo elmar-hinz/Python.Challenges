@@ -4,16 +4,16 @@ HelloWorld package
 Submodules
 ----------
 
-HelloWorld.challenge module
----------------------------
+HelloWorld\.challenge module
+----------------------------
 
 .. automodule:: HelloWorld.challenge
     :members:
     :undoc-members:
     :show-inheritance:
 
-HelloWorld.test module
-----------------------
+HelloWorld\.test module
+-----------------------
 
 .. automodule:: HelloWorld.test
     :members:

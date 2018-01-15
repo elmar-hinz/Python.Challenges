@@ -4,16 +4,16 @@ tests package
 Submodules
 ----------
 
-tests.test_challenge module
----------------------------
+tests\.test\_challenge module
+-----------------------------
 
 .. automodule:: tests.test_challenge
     :members:
     :undoc-members:
     :show-inheritance:
 
-tests.test_graph module
------------------------
+tests\.test\_graph module
+-------------------------
 
 .. automodule:: tests.test_graph
     :members:
