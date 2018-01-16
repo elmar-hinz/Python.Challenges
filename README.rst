@@ -14,8 +14,8 @@ Find the full documentation at Readthedocs_.
 :License: MIT
 :Author: Elmar Hinz
 :Repository: https://github.com/elmar-hinz/Python.Challenges
-:Documentation Server: http://challenges.readthedocs.io |badge|
-:Deployment Server: https://pypi.org/project/challenges/
+:Documentation: http://challenges.readthedocs.io |badge|
+:Installation: https://pypi.org/project/challenges/
 
 .. |badge| image:: https://readthedocs.org/projects/challenges/badge/?version=latest
     :target: http://challenges.readthedocs.io/en/latest/?badge=latest
@@ -56,24 +56,26 @@ the **Challenge Runner** via the command line. In Bioinformatics this is often a
 Features
 ========
 
-    * Listing available challenges
-    * Scaffolding a new challenge directory with a challenge class and a unit test class
-    * Executing the `sample` from the sample class attribute
-    * Reading input files from the command line
-    * Output formatted result on the command line
-    * Writing `sample.txt` and matching `result.txt` into the challenges directory
-    * Running the unit test case of a challenge
-    * Reading lines with integers
-    * Reading lines with floats
-    * Reading lines with words
-    * Reading fasta input
+    * listing available challenges
+    * scaffolding a new challenge directory with a challenge class and a unit test class
+    * executing the `sample` from the sample class attribute
+    * reading input files from the command line
+    * output formatted result on the command line
+    * writing `sample.txt` and matching `result.txt` into the challenges directory
+    * running the unit test case of a challenge
+    * reading lines with integers
+    * reading lines with floats
+    * reading lines with words
+    * reading fasta input
 
 Directory layout
 ================
 
+Lets call the base directory of your challenges project `myChallenges/`. Name it however you like.
+
 .. code-block:: bash
 
-    anyDirectory/
+    myChallenges/
         Challenge1/__init__.py
         Challenge1/challenge.py
         Challenge1/test.py
@@ -86,13 +88,14 @@ The names `Challenge1` and `Challenge2` are just placeholders for the names you 
 
 .. hint::
 
-    The files `__init__.py` are empty. They help unittest tools like *nosetest* to locate the test files.
+    The files `__init__.py` are empty. They help unittest tools like *nosetest* to locate the files.
 
 Challenge runner
 ================
 
-The directory `myChallenges/` is the base directory of your challenges project. It's the directory from where to use the
-**Challenge Runner**.
+.. important::
+
+    Always move into the base directory to use the **Challenge Runner**.
 
 List the available challenges
 -----------------------------
@@ -213,13 +216,15 @@ There are two deliberate exceptions:
     first character must be uppercase. This is used to find and list the challenge directories between other modules.
     If the name of your challenge is **ExampleProblem** then this are the required names:
 
-    :Directory: ``ExampleProblem/``
-    :Challenge file: ``ExampleProblem/challenge.py``
-    :Unittest file: ``ExampleProblem/test.py``
-    :Full qualified challenge class: ``ExampleProblem.challenge.ExampleProblemChallenge``
-    :Full qualified test class: ``ExampleProblem.test.ExampleProblemTest``
+    :directory: ``ExampleProblem/``
+    :challenge file: ``ExampleProblem/challenge.py``
+    :unittest file: ``ExampleProblem/test.py``
+    :full qualified challenge class: ``ExampleProblem.challenge.ExampleProblemChallenge``
+    :full qualified test class: ``ExampleProblem.test.ExampleProblemTest``
 
     This is automatically wired up during scaffolding.
+
+    Abbreviations or codes like on Rosalind_ may be all uppercase  or camelcase, ``RSUB`` or ``Rsub``.
 
 2. Inherited class attributes and methods don't have a leading underscore:
 
@@ -227,6 +232,7 @@ There are two deliberate exceptions:
     underscores. As inheritance is a core concept of the challenge class, this would lead to a hell of leading
     underscores. For this reason we don't follow the style guide in this recommendation.
 
+ .. _Rosalind: http://rosalind.info
 
 .. tip::
 
