@@ -10,7 +10,7 @@ Find the full documentation at Readthedocs_.
 
 .. _Readthedocs: http://challenges.readthedocs.io
 
-:State: alpha
+:State: beta
 :License: MIT
 :Author: Elmar Hinz
 :Repository: https://github.com/elmar-hinz/Python.Challenges
@@ -53,13 +53,21 @@ writing of files out of the way. You inherit several methods to set up the model
 While the class attribute `sample` just holds a minimal example of the input, the actual input is later injected by
 the **Challenge Runner** via the command line. In Bioinformatics this is often a large file of DNA.
 
-.. hint:: See a more verbose example of HelloWorld.
+.. hint:: See a more verbose example of HelloWorld and other examples.
 
     * HelloWorldChallenge_
     * HelloWorldTest_
+    * HelloFastaChallenge_
+    * HelloFastaTest_
+    * HelloGraphChallenge_
+    * HelloGraphTest_
 
 .. _HelloWorldChallenge: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/challenge.py
 .. _HelloWorldTest: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloWorld/test.py
+.. _HelloFastaChallenge: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloFasta/challenge.py
+.. _HelloFastaTest: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloFasta/test.py
+.. _HelloGraphChallenge: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloGraph/challenge.py
+.. _HelloGraphTest: https://github.com/elmar-hinz/Python.Challenges/blob/master/HelloGraph/test.py
 
 Features
 ========
