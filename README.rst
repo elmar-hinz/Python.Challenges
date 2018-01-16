@@ -185,6 +185,14 @@ To quickly see all available options.
 
     challenge --help
 
+.. tip::
+
+    For every double dashed option there is a single dashed one letter shortcut. Help lists them all.
+
+        prompt> challenge Challenge1 --scaffold
+        prompt> challenge Challenge1 -s
+
+
 Naming conventions
 ==================
 
@@ -214,9 +222,10 @@ There are two deliberate exceptions:
     underscores. As inheritance is a core concept of the challenge class, this would lead to a hell of leading
     underscores. For this reason we don't follow the style guide in this recommendation.
 
+
 .. tip::
 
-    On useful advantage of naming the directory just like your challenge is, that you can use the path expansion
+    One useful advantage of naming the directory just like your challenge is, that you can use the path expansion
     mechanism of the shell. Write the first characters of the directory name and hit <TAB>. Now you can use the
     directory name as name of the challenge. A trailing slash is discarded. The following two inputs are equivalent.
 
@@ -224,6 +233,19 @@ There are two deliberate exceptions:
 
         prompt> challenge -k ExampleProblem
         prompt> challenge -k ExampleProblem/
+
+.. tip::
+
+    You can palce the dashed options behind the name of the challenge. This makes it easy to exchange them.
+    Practical usage may look like this.
+
+    .. code-block:: bash
+
+        prompt> challenge ExampleProblem -s
+        prompt> challenge ExampleProblem/ -u
+        prompt> challenge ExampleProblem/ -k
+        prompt> challenge ExampleProblem/ -f ~/Downloads/data.txt
+        prompt> challenge ExampleProblem/ -f ~/Downloads/data.txt -w
 
 Installation
 ============
