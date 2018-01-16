@@ -20,14 +20,6 @@ challenges\.conf module
     :undoc-members:
     :show-inheritance:
 
-challenges\.graph module
-------------------------
-
-.. automodule:: challenges.graph
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 challenges\.main module
 -----------------------
 
