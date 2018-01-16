@@ -21,9 +21,16 @@ class HelloWorldTest(unittest.TestCase):
 
     def test_calc(self):
         self.challenge.model.split_at = 5
-        self.challenge.model.word = 'honeymoon'
+        self.challenge.model.word = 'WorldHello'
         self.challenge.calc()
-        self.assertEqual('moon honey', self.challenge.result)
+        self.assertEqual('Hello World', self.challenge.result.word)
+        self.assertEqual(11, self.challenge.result.length)
+
+    def test_format(self):
+        self.challenge.result.word = 'Hello World'
+        self.challenge.result.length = 11
+        self.challenge.format()
+        self.assertEqual(self.challenge.expectation(), self.challenge.output)
 
     def test_full_integration(self):
         self.challenge.main()

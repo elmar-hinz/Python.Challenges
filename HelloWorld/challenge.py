@@ -43,7 +43,7 @@ class HelloWorldChallenge(Challenge):
 
     This challenge takes a word as input and a number at which position
     to split the word. It returns a new word composed of the switched parts
-    with a blank in between.
+    with a blank in between and the total length of the new string.
     """
 
     sample = '''
@@ -61,7 +61,10 @@ class HelloWorldChallenge(Challenge):
         Hello World
     """
 
-    expect = 'Hello World'
+    expect = '''
+        Hello World
+        11
+    '''
 
     """This is the expected output for the given sample. 
     
@@ -77,4 +80,10 @@ class HelloWorldChallenge(Challenge):
         """Swap head and tail of the model and store to result."""
         first = self.model.word[self.model.split_at:]
         second = self.model.word[:self.model.split_at]
-        self.result = first + ' ' + second
+        word = first + ' ' + second
+        self.result.word = word
+        self.result.length = len(word)
+
+    def format(self):
+        self.output = '{}\n{}'.format(self.result.word, self.result.length)
+
