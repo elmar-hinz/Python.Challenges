@@ -62,6 +62,10 @@ Features
     * Output formatted result on the command line
     * Writing `sample.txt` and matching `result.txt` into the challenges directory
     * Running the unit test case of a challenge
+    * Reading lines with integers
+    * Reading lines with floats
+    * Reading lines with words
+    * Reading fasta input
 
 Directory layout
 ================
@@ -305,4 +309,3 @@ alternatively as `stepik` or `rosalind`.
 
     prompt> rosalind --version
     rosalind 0.6.0
-

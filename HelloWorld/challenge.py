@@ -43,10 +43,24 @@ class HelloWorldChallenge(Challenge):
         5
         WorldHello
     '''
+
     """This is the input sample. It can be overwritten by injection.
 
         * first line: integer
         * second line: word
+        
+        It is used by the --klass option of the challenge runner.
+        It can be used for unit tests.
+        
+        prompt> challenge HelloWorld/ --klass
+        Hello World
+    """
+
+    expect = 'Hello World'
+
+    """This is the expected output for the sample. 
+    
+        It can be used for unit tests.
     """
 
     def build(self):
