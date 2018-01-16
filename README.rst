@@ -15,6 +15,7 @@ Find the full documentation at Readthedocs_.
 :Author: Elmar Hinz
 :Repository: https://github.com/elmar-hinz/Python.Challenges
 :Documentation Server: http://challenges.readthedocs.io |badge|
+:Deployment Server: https://pypi.org/project/challenges/
 
 .. |badge| image:: https://readthedocs.org/projects/challenges/badge/?version=latest
     :target: http://challenges.readthedocs.io/en/latest/?badge=latest
