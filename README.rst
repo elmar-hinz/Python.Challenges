@@ -29,8 +29,13 @@ Hello world
     from challenges import Challenge
 
     class AddChallenge(Challenge):
+
         sample = '''
             5, 6
+        '''
+
+        expect = '''
+            11
         '''
 
         def build(self):
@@ -38,6 +43,9 @@ Hello world
 
         def calc(self):
             self.result = self.model[0] + self.model[1]
+
+        def format(self):
+            self.output = str(self.result)
 
 The class to write lets you focus on the core algorithms of the challenge while keeping stuff like opening, reading and
 writing of files out of the way. You inherit several methods to set up the model or to format your result for writing.
@@ -309,10 +317,10 @@ alternatively as `stepik` or `rosalind`.
 .. code-block:: bash
 
     prompt> challenge --version
-    challenge 0.6.0
+    challenge 0.8.0
 
     prompt> stepik --version
-    stepik 0.6.0
+    stepik 0.8.0
 
     prompt> rosalind --version
-    rosalind 0.6.0
+    rosalind 0.8.0
