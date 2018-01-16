@@ -22,10 +22,17 @@ controls the execution of the challenge. Also have a look into the parents
 <__init__> method to see what instance attributes are already prepared to serve
 the communication of the methods.
 
-By the class attribute <sample> a minimal example of the possible input is
-given. This is recommended for every challenge. It is useful during
-development or for smoke tests. Otherwise this class attribute
-will be overwritten by injection of an instance attribute of the same name.
+By the class attribute <sample> a small example of the possible input is
+given. This is recommended for every challenge. It is useful as input of
+unit tests or for the smoke tests with the -k option. For more extended
+input, in example from the given data files, this class attribute will be
+overwritten by injection of an instance attribute of the same name.
+
+The optional class attribute <expect> the expected output for the given
+<sample> sets the expected output. This is typically used by unit tests.
+
+Together <sample> and <expect> serve as documantation of the intention of
+the challenge.
 """
 
 from challenges import Challenge
@@ -44,13 +51,11 @@ class HelloWorldChallenge(Challenge):
         WorldHello
     '''
 
-    """This is the input sample. It can be overwritten by injection.
-
-        * first line: integer
-        * second line: word
+    """This is a small exsample of the input. It can be overwritten by 
+    injection.
         
         It is used by the --klass option of the challenge runner.
-        It can be used for unit tests.
+        It is also used by unit tests.
         
         prompt> challenge HelloWorld/ --klass
         Hello World
@@ -58,9 +63,9 @@ class HelloWorldChallenge(Challenge):
 
     expect = 'Hello World'
 
-    """This is the expected output for the sample. 
+    """This is the expected output for the given sample. 
     
-        It can be used for unit tests.
+        It is used by unit tests, especially by the full integration test.
     """
 
     def build(self):
