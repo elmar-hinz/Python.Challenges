@@ -42,7 +42,7 @@ setup(
     },
     scripts=['bin/challenge'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Education',
         'License :: OSI Approved :: MIT License',
