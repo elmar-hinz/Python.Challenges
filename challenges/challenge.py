@@ -3,11 +3,9 @@
 This module holds the base class of all challenges.
 """
 
-import math
 import re
-
+import math
 import types
-
 
 class Challenge:
     """Base class of all challenges
@@ -251,6 +249,30 @@ class Challenge:
         match = re.compile(self.edge_pattern).match(self.line(nr))
         return self._to_edge(match)
 
+    def line_to_permutation(self, nr, terminals = False):
+        """Convert one line to a permutation
+
+        optionally surrounded by terminals
+
+        Example: (+1 -3, -2)
+        Result: [1, -3, 2]
+        If terminals is True: [0, 1, -3, 2, 4]
+
+        The number of the line is selected by line_nr.
+        Input may be surrounded by a pair of round parenthesis.
+        The split behaviour can be adjusted by changing self.edge_pattern.
+        """
+        line = self.line(nr)
+        match = re.compile('^\((.*)\)$').match(line)
+        if match:
+            digits = match.group(1)
+        else:
+            digits = line
+        perm =  [int(d) for d in re.compile(self.split_pattern).split(digits)]
+        if terminals:
+            perm = [0] + perm + [len(perm) + 1]
+        return perm
+
     def edges(self, start=0, stop=None):
         """Generator to read edges from lines.
 
@@ -355,3 +377,11 @@ class Challenge:
         else:
             joint = '->'
         return self.format_list_of_integers(integers, joint)
+
+    def format_permutations(self, permutations):
+        output = ''
+        for perm in permutations:
+            output += '('
+            output += ' '.join(('+' if i > 0 else '') + str(i) for i in perm)
+            output += ')' + self.br
+        return output[:-1]

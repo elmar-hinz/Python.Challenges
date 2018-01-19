@@ -71,6 +71,24 @@ class ChallengeTestCase(unittest.TestCase):
         self.challenge.lines = ['one', 'two', 'three']
         self.assertEqual(self.challenge.line(1), 'two')
 
+    def test_line_to_permuation(self):
+        """Show a line can be retrieved as permutation."""
+        self.challenge.lines = ['one', '+1 -2']
+        result = self.challenge.line_to_permutation(1)
+        self.assertEqual(result, [1, -2])
+
+    def test_line_to_permuation_with_parenthesis(self):
+        """Show a line can be retrieved as permutation."""
+        self.challenge.lines = ['one', '(+1 -2)']
+        result = self.challenge.line_to_permutation(1)
+        self.assertEqual(result, [1, -2])
+
+    def test_line_to_permuation_surrounded_with_terminals(self):
+        """Show a line can be retrieved as permutation."""
+        self.challenge.lines = ['one', '+1 -2']
+        result = self.challenge.line_to_permutation(1)
+        self.assertEqual(result, [1, -2])
+
     def test_line_to_integers(self):
         """Show a line can be retrieved as integers."""
         self.challenge.lines = ['one', '1, 2, 3']
@@ -260,3 +278,10 @@ class ChallengeTestCase(unittest.TestCase):
         self.assertEqual(result, '11->22->33')
         result = self.challenge.format_path([11, 22, 33], backwards=True)
         self.assertEqual(result, '11<-22<-33')
+
+    def test_format_permuations(self):
+        """Show a list of permuations can be formatted."""
+        list = [[1, -2], [-3, 4]]
+        actual = self.challenge.format_permutations(list)
+        expect = '(+1 -2)\n(-3 +4)'
+        self.assertEqual(expect, actual)
