@@ -380,10 +380,11 @@ class Challenge:
 
     def format_permutations(self, permutations, separator = '\n',
                             element_separator = ' '):
-        output = ''
+        entries = []
         for perm in permutations:
-            output += '('
-            output += element_separator.join(
+            entry = '('
+            entry += element_separator.join(
                 ('+' if i > 0 else '') + str(i) for i in perm)
-            output += ')' + separator
-        return output[:-len(separator)]
+            entry += ')'
+            entries.append(entry)
+        return separator.join(entries)

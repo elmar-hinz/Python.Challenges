@@ -286,7 +286,7 @@ class ChallengeTestCase(unittest.TestCase):
         expect = '(+1 -2)\n(-3 +4)'
         self.assertEqual(expect, actual)
 
-    def test_format_permuations_with_user_defined_joint(self):
+    def test_format_permuations_with_user_defined_separator(self):
         """Show user defined separators can be used."""
         list = [[1, -2], [-3, 4]]
         actual = self.challenge.format_permutations(
@@ -295,4 +295,16 @@ class ChallengeTestCase(unittest.TestCase):
             element_separator = ' | '
         )
         expect = '(+1 | -2), (-3 | +4)'
+        self.assertEqual(expect, actual)
+
+    def test_format_permuations_with_user_defined_separator_of_length_zero(
+            self):
+        """Show user defined separators can be used."""
+        list = [[1, -2], [-3, 4]]
+        actual = self.challenge.format_permutations(
+            list,
+            separator = '',
+            element_separator = ''
+        )
+        expect = '(+1-2)(-3+4)'
         self.assertEqual(expect, actual)
