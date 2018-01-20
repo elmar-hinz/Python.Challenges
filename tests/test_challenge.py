@@ -75,19 +75,26 @@ class ChallengeTestCase(unittest.TestCase):
         """Show a line can be retrieved as permutation."""
         self.challenge.lines = ['one', '+1 -2']
         result = self.challenge.line_to_permutation(1)
-        self.assertEqual(result, [1, -2])
+        self.assertEqual((1, -2), result)
 
     def test_line_to_permuation_with_parenthesis(self):
         """Show a line can be retrieved as permutation."""
         self.challenge.lines = ['one', '(+1 -2)']
         result = self.challenge.line_to_permutation(1)
-        self.assertEqual(result, [1, -2])
+        self.assertEqual((1, -2), result)
 
     def test_line_to_permuation_surrounded_with_terminals(self):
         """Show a line can be retrieved as permutation."""
         self.challenge.lines = ['one', '+1 -2']
         result = self.challenge.line_to_permutation(1)
-        self.assertEqual(result, [1, -2])
+        self.assertEqual(result, (1, -2))
+
+    def test_line_to_permutations(self):
+        """Show a line can be retrived as genome. """
+        self.challenge.lines = ['one', '(+1 -2)(+3 +4)']
+        result = self.challenge.line_to_permutations(1)
+        expect = [(1, -2), (3, 4)]
+        self.assertEqual(expect, result)
 
     def test_line_to_integers(self):
         """Show a line can be retrieved as integers."""

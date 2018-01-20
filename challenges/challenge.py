@@ -200,11 +200,11 @@ class Challenge:
     # Accessing input lines
     # --------------------------------------------------
 
-    def line(self, number):
+    def line(self, number:int):
         """ Return one line by the given number. """
         return self.lines[number]
 
-    def line_to_words(self, line_nr):
+    def line_to_words(self, line_nr:int):
         """ Split one line into  a list of words.
 
         The number of the line is selected by line_nr.
@@ -213,7 +213,7 @@ class Challenge:
 
         return list(re.compile(self.split_pattern).split(self.line(line_nr)))
 
-    def line_to_integers(self, line_nr):
+    def line_to_integers(self, line_nr:int):
         """ Split one line into  a list of integers.
 
         The number of the line is selected by line_nr.
@@ -223,7 +223,7 @@ class Challenge:
         return [int(i) for i in
                 re.compile(self.split_pattern).split(self.line(line_nr))]
 
-    def line_to_integer(self, line_nr):
+    def line_to_integer(self, line_nr:int):
         """ Return line as integer.
 
         The number of the line is selected by line_nr.
@@ -231,7 +231,7 @@ class Challenge:
 
         return int(self.line(line_nr))
 
-    def line_to_floats(self, line_nr):
+    def line_to_floats(self, line_nr:int):
         """ Split one line into  a list of floats.
 
         The number of the line is selected by line_nr.
@@ -240,7 +240,7 @@ class Challenge:
         return [float(i) for i in
                 re.compile(self.split_pattern).split(self.line(line_nr))]
 
-    def line_to_edge(self, nr):
+    def line_to_edge(self, nr:int):
         """Convert one line to an edge.
 
         The number of the line is selected by line_nr.
@@ -249,18 +249,21 @@ class Challenge:
         match = re.compile(self.edge_pattern).match(self.line(nr))
         return self._to_edge(match)
 
-    def line_to_permutation(self, nr, terminals = False):
+    def line_to_permutation(self, nr:int, terminals:bool = False):
         """Convert one line to a permutation
 
         optionally surrounded by terminals
 
         Example: (+1 -3, -2)
-        Result: [1, -3, 2]
-        If terminals is True: [0, 1, -3, 2, 4]
+        Result: (1, -3, 2)
+        If terminals is True: (0, 1, -3, 2, 4)
 
         The number of the line is selected by line_nr.
         Input may be surrounded by a pair of round parenthesis.
-        The split behaviour can be adjusted by changing self.edge_pattern.
+
+        :param nr: line number
+        :param terminals: if True surrounded by 0 and n + 1
+        :return: permutation
         """
         line = self.line(nr)
         match = re.compile('^\((.*)\)$').match(line)
@@ -271,9 +274,28 @@ class Challenge:
         perm =  [int(d) for d in re.compile(self.split_pattern).split(digits)]
         if terminals:
             perm = [0] + perm + [len(perm) + 1]
-        return perm
+        return tuple(perm)
 
-    def edges(self, start=0, stop=None):
+    def line_to_permutations(self, nr:int):
+        """Convert one line to multiple permutations
+
+        Example: (+1 -3, -2)(+4 +5)
+        Result: [(1, -3, 2), (4, 5)]
+
+        The number of the line is selected by line_nr.
+
+        :param nr: line number
+        :return: list of permutations (tuples)
+        """
+        matches = re.findall('\(([^)]*)\)', self.line(nr))
+        result = []
+        for digits in matches:
+            result.append(tuple(int(d) for d in re.compile(
+                self.split_pattern).split(digits)))
+        return result
+
+
+    def edges(self, start:int=0, stop:int=None):
         """Generator to read edges from lines.
 
         Reads a range of lines, one edge per line, and yields the edges.
@@ -301,7 +323,7 @@ class Challenge:
             else:
                 break  # If edges end before stop, which may be infinity
 
-    def fasta(self, start=0, stop=None):
+    def fasta(self, start:int=0, stop:int=None):
         """Generator to read FASTA formatted samples.
 
         Reads multiple fasta sequences and yields them.
@@ -338,7 +360,7 @@ class Challenge:
         # Yield final sequence
         yield name, sequence
 
-    def fasta_strands(self, start=0, stop=None):
+    def fasta_strands(self, start:int=0, stop:int=None):
         """ Get the strands of a fasta read as list.
 
         Takes the same arguments as self.fasta() and delegates to it.
@@ -359,14 +381,14 @@ class Challenge:
     # --------------------------------------------------
 
     # noinspection PyMethodMayBeStatic
-    def format_list_of_integers(self, integers, joint=', '):
+    def format_list_of_integers(self, integers:list, joint:str=', '):
         """Join a list of integers to a string
 
         Use the given joint.
         """
         return joint.join(str(x) for x in integers)
 
-    def format_path(self, integers, backwards=False):
+    def format_path(self, integers:list, backwards:bool=False):
         """Join a list of integers to path of nodes.
 
         The joint is -> by default. If the parameter
@@ -378,8 +400,8 @@ class Challenge:
             joint = '->'
         return self.format_list_of_integers(integers, joint)
 
-    def format_permutations(self, permutations, separator = '\n',
-                            element_separator = ' '):
+    def format_permutations(self, permutations:list, separator:str = '\n',
+                            element_separator:str = ' '):
         entries = []
         for perm in permutations:
             entry = '('
