@@ -378,10 +378,12 @@ class Challenge:
             joint = '->'
         return self.format_list_of_integers(integers, joint)
 
-    def format_permutations(self, permutations):
+    def format_permutations(self, permutations, separator = '\n',
+                            element_separator = ' '):
         output = ''
         for perm in permutations:
             output += '('
-            output += ' '.join(('+' if i > 0 else '') + str(i) for i in perm)
-            output += ')' + self.br
-        return output[:-1]
+            output += element_separator.join(
+                ('+' if i > 0 else '') + str(i) for i in perm)
+            output += ')' + separator
+        return output[:-len(separator)]
