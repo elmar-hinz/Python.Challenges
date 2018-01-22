@@ -1,6 +1,6 @@
 import unittest
 
-from types import SimpleNamespace
+from types import SimpleNamespace as namespace
 
 from challenges import Challenge
 
@@ -23,8 +23,8 @@ class ChallengeTestCase(unittest.TestCase):
     def test_instance_attributes(self):
         """Check setting of instance attributes."""
         self.assertIsInstance(self.challenge.lines, list)
-        self.assertIsInstance(self.challenge.model, SimpleNamespace)
-        self.assertIsInstance(self.challenge.result, SimpleNamespace)
+        self.assertIsInstance(self.challenge.model, namespace)
+        self.assertIsInstance(self.challenge.result, namespace)
         self.assertEqual(self.challenge.output, '')
 
     def test_instance_shadows_class_attribute_of_sample(self):
@@ -71,6 +71,64 @@ class ChallengeTestCase(unittest.TestCase):
         self.challenge.lines = ['one', 'two', 'three']
         self.assertEqual(self.challenge.line(1), 'two')
 
+    def test_lines_to_list(self):
+        """ Show that lines_to_list() works as expected. """
+        self.challenge.lines = ['one', 'two', 'three', 'foor']
+        expect = ['one', 'two', 'three', 'foor']
+        self.assertEqual(expect, self.challenge.lines_to_list() )
+        expect = ['two', 'three']
+        self.assertEqual(expect, self.challenge.lines_to_list(1, 3) )
+
+    def test_line_to_words(self):
+        """ Show that line_to_words() works as expected. """
+        self.challenge.lines = ['one two', 'three four']
+        expect = ['three', 'four']
+        self.assertEqual(expect, self.challenge.line_to_words(1))
+
+    def test_lines_to_words(self):
+        """ Show that lines_to_words() works as expected. """
+        self.challenge.lines = ['one two', 'three four', 'five six']
+        self.assertEqual(['one', 'two', 'three', 'four', 'five', 'six'],
+                self.challenge.lines_to_words(flatten=True))
+        self.assertEqual([['three', 'four']],
+                self.challenge.lines_to_words(1,2))
+
+    def test_line_to_integer(self):
+        """Show a line can be retrieved as integer."""
+        self.challenge.lines = ['11', '22']
+        self.assertEqual(22, self.challenge.line_to_integer(1))
+
+    def test_line_to_integers(self):
+        """Show a line can be retrieved as integers."""
+        self.challenge.lines = ['one', '1, 2, 3']
+        result = self.challenge.line_to_integers(1)
+        self.assertEqual(result, [1, 2, 3])
+
+    def test_lines_to_integers(self):
+        """Show lines_to_integers() works as expected."""
+        self.challenge.lines = ['1 2', '3 4', '5 6']
+        self.assertEqual([1, 2, 3, 4, 5, 6],
+                         self.challenge.lines_to_integers(flatten=True))
+        self.assertEqual([[3, 4]], self.challenge.lines_to_integers(1,2))
+
+    def test_line_to_float(self):
+        """Show a line can be retrieved as float."""
+        self.challenge.lines = ['11.11', '22.22']
+        self.assertEqual(22.22, self.challenge.line_to_float(1))
+
+    def test_line_to_floats(self):
+        """Show a line can be retrieved as floats."""
+        self.challenge.lines = ['one', '1.1, 2.2, 3.3']
+        result = self.challenge.line_to_floats(1)
+        self.assertEqual(result, [1.1, 2.2, 3.3])
+
+    def test_lines_to_floats(self):
+        """Show lines_to_floats() works as expected."""
+        self.challenge.lines = ['1.1 2.2', '3.3 4.4', '5.5 6.6']
+        self.assertEqual([1.1, 2.2, 3.3, 4.4, 5.5, 6.6],
+                         self.challenge.lines_to_floats(flatten=True))
+        self.assertEqual([[3.3, 4.4]], self.challenge.lines_to_floats(1,2))
+
     def test_line_to_permuation(self):
         """Show a line can be retrieved as permutation."""
         self.challenge.lines = ['one', '+1 -2']
@@ -96,39 +154,61 @@ class ChallengeTestCase(unittest.TestCase):
         expect = [(1, -2), (3, 4)]
         self.assertEqual(expect, result)
 
-    def test_line_to_integers(self):
-        """Show a line can be retrieved as integers."""
-        self.challenge.lines = ['one', '1, 2, 3']
-        result = self.challenge.line_to_integers(1)
-        self.assertEqual(result, [1, 2, 3])
-
-    def test_line_to_floats(self):
-        """Show a line can be retrieved as floats."""
-        self.challenge.lines = ['one', '1.11, 2.22']
-        result = self.challenge.line_to_floats(1)
-        self.assertEqual(result, [1.11, 2.22])
-
     def test_line_to_edge(self):
-        """Show a line can be retrieved as edge."""
+        """Show lint_to_edge() works as expected."""
         self.challenge.lines = ['one', '1->2:12']
-        result = self.challenge.line_to_edge(1)
-        self.assertIsInstance(result, SimpleNamespace)
-        self.assertEqual(result.tail, 1)
-        self.assertEqual(result.head, 2)
-        self.assertEqual(result.weight, 12)
-
-    def test_line_to_edge_without_weight(self):
-        """Show a line can be retrieved as edge."""
+        self.assertEqual(namespace(head=2, tail=1, weight=12),
+                         self.challenge.line_to_edge(1))
         self.challenge.lines = ['one', '1->2']
-        result = self.challenge.line_to_edge(1)
-        self.assertIsInstance(result, SimpleNamespace)
-        self.assertEqual(result.tail, 1)
-        self.assertEqual(result.head, 2)
-        with self.assertRaises(AttributeError):
-            print(result.weight)
+        self.assertEqual(namespace(head=2, tail=1),
+                         self.challenge.line_to_edge(1))
+
+    def test_line_to_edges(self):
+        """Show lint_to_edges() works as expected."""
+        self.challenge.lines = ['one', '1->2, 3']
+        self.assertEqual([namespace(head='2', tail=1),
+                          namespace(head='3', tail=1)],
+                         self.challenge.line_to_edges(1))
+
+    def test_lines_to_edges(self):
+        """Show lines_to_edges() works as expected."""
+        self.challenge.lines = ['1->2', '2->3', '3->4']
+        expect = [namespace(head=2, tail=1),
+                  namespace(head=3, tail=2),
+                  namespace(head=4, tail=3)]
+        self.assertEqual(expect, self.challenge.lines_to_edges())
+        expect = [namespace(head=3, tail=2)]
+        self.assertEqual(expect, self.challenge.lines_to_edges(1,2))
+        self.challenge.lines = ['1->2:22']
+        expect = [namespace(head=2, tail=1, weight=22)]
+        self.assertEqual(expect, self.challenge.lines_to_edges())
+        self.challenge.lines = ['1->2, 3', '2->3']
+        expect = [namespace(head='2', tail=1),
+                  namespace(head='3', tail=1),
+                  namespace(head=3, tail=2)]
+        self.assertEqual(expect, self.challenge.lines_to_edges())
+
+    def test_lines_to_graph(self):
+        """Show lines_to_graph() works as expected."""
+        self.challenge.lines = [3, '1->2', '2->3', '3->4', 22]
+        graph = self.challenge.lines_to_graph(1, 4)
+        self.assertEqual(4, graph.node_count)
+        self.assertEqual(3, graph.edge_count)
+        self.assertEqual([1, 2, 3, 4], graph.nodes)
+        self.assertIn(3, graph.edges[2])
+        # multiple edges on one line
+        self.challenge.lines = ['1->2, 3']
+        graph = self.challenge.lines_to_graph()
+        self.assertEqual(2, graph.edge_count)
+        # weights supported
+        self.challenge.lines = ['1->2:3']
+        graph = self.challenge.lines_to_graph()
+        self.assertEqual(3, graph.weights[(1, 2)])
+
 
     def test_read_edges_from_to(self):
         """Show reading edges limited by start and stop."""
+        """ !!! DEPRECATED !!! """
         self.challenge.sample = '''
         0
         1->9
@@ -144,6 +224,7 @@ class ChallengeTestCase(unittest.TestCase):
 
     def test_read_edges_from(self):
         """Show reading edges self limiting."""
+        """ !!! DEPRECATED !!! """
         self.challenge.sample = '''
         0
         1->9
@@ -158,6 +239,7 @@ class ChallengeTestCase(unittest.TestCase):
 
     def test_read_edges_without_given_range(self):
         """Show reading edges without given range starting from line 0."""
+        """ !!! DEPRECATED !!! """
         self.challenge.sample = '''
         1->9
         2->9

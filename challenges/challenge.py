@@ -6,6 +6,8 @@ This module holds the base class of all challenges.
 import re
 import math
 import types
+from collections import defaultdict
+
 
 class Challenge:
     """Base class of all challenges
@@ -90,7 +92,23 @@ class Challenge:
 
     edge_pattern = '^(\d+)->(\d+)(:(\d+))?$'
     """Reg expression to extract edges of a graph.
+    
+    With or without weight.
+    
+        2->3
+        2->3:22
 
+    A default setting used by methods that extract edges from input lines.
+    May need adjustment for different kind of edge input formats.
+    """
+
+    multi_edge_pattern = '^(\d+)->(\d+(,?\s*\d+)*)$'
+    """Reg expressen to extrct edges of a graph. 
+    
+    Multiple edges on one line.
+    
+        2->3, 4, 5
+    
     A default setting used by methods that extract edges from input lines.
     May need adjustment for different kind of edge input formats.
     """
@@ -200,56 +218,160 @@ class Challenge:
     # Accessing input lines
     # --------------------------------------------------
 
-    def line(self, number:int):
-        """ Return one line by the given number. """
-        return self.lines[number]
+    def line(self, nr: int):
+        """ Return one line by the given number.
 
-    def line_to_words(self, line_nr:int):
-        """ Split one line into  a list of words.
-
-        The number of the line is selected by line_nr.
-        The split behaviour can be adjusted by changing self.split_pattern.
+        :param nr: line number
+        :return: line as string
         """
+        return self.lines[nr]
 
-        return list(re.compile(self.split_pattern).split(self.line(line_nr)))
+    def lines_to_list(self, start: int = 0, stop: int = None):
+        """Return a list of lines.
 
-    def line_to_integers(self, line_nr:int):
-        """ Split one line into  a list of integers.
+        If stop is not given all remaining lines are used.
 
-        The number of the line is selected by line_nr.
-        The split behaviour can be adjusted by changing self.split_pattern.
+        :param start: index of first line
+        :param stop: index of line after last line
+        :return: list of lines
         """
+        if stop:
+            return self.lines[start:stop]
+        else:
+            return self.lines[start:]
 
-        return [int(i) for i in
-                re.compile(self.split_pattern).split(self.line(line_nr))]
+    def _to_words(self, line: str):
+        """ Split line into words
 
-    def line_to_integer(self, line_nr:int):
+        The split behaviour can be adjusted by changing self.split_pattern.
+
+        :param line: the string to split
+        :return: list of words
+        """
+        return list(re.compile(self.split_pattern).split(line))
+
+    def line_to_words(self, nr: int):
+        """ Split one line into a list of words.
+
+        :param nr: line number
+        :return: list of words
+        :see: self._to_words()
+        """
+        return self._to_words(self.line(nr))
+
+    def lines_to_words(self, start: int = 0, stop: int = None,
+                       flatten: bool = False):
+        """Split a range of lines into words.
+
+        If stop is not given all remaining lines are used.
+
+        :param start: index of first line
+        :param stop: index of line after last line
+        :param flatten: flatten to one dimensional list
+        :return: one or two dimensional list of words
+        :see: self._to_words()
+        """
+        words = []
+        for line in self.lines_to_list(start, stop):
+            if flatten:
+                words += self._to_words(line)
+            else:
+                words.append(self._to_words(line))
+        return words
+
+    def _to_integers(self, line:str):
+        """ Split line into integers
+
+        The split behaviour can be adjusted by changing self.split_pattern.
+
+        :param line: the string to split
+        :return: list of integers
+        """
+        return [int(i) for i in re.compile(self.split_pattern).split(line)]
+
+    def line_to_integer(self, nr: int):
         """ Return line as integer.
 
-        The number of the line is selected by line_nr.
+        :param nr: line number
+        :return: integer
         """
+        return int(self.line(nr))
 
-        return int(self.line(line_nr))
+    def line_to_integers(self, nr: int):
+        """ Split one line into  a list of integers.
 
-    def line_to_floats(self, line_nr:int):
+        :param nr: line number
+        :return: list of integers
+        :see: self._to_integers
+        """
+        return self._to_integers(self.line(nr))
+
+    def lines_to_integers(self, start:int=0, stop=None, flatten=False):
+        """Split a range of lines into integers
+
+        If stop is not given all remaining lines are used.
+
+        :param start: index of first line
+        :param stop: index of line after last line
+        :param flatten: flatten to one dimensional list
+        :return: one or two dimensional list of integers
+        :see: self._to_integers()
+        """
+        integers = []
+        for line in self.lines_to_list(start, stop):
+            if flatten:
+                integers += self._to_integers(line)
+            else:
+                integers.append(self._to_integers(line))
+        return integers
+
+    def _to_floats(self, line:str):
+        """ Split line into floats
+
+        The split behaviour can be adjusted by changing self.split_pattern.
+
+        :param line: the string to split
+        :return: list of floats
+        """
+        return [float(f) for f in re.compile(self.split_pattern).split(line)]
+
+    def line_to_float(self, nr: int):
+        """ Return line as float.
+
+        :param nr: line number
+        :return: float
+        """
+        return float(self.line(nr))
+
+    def line_to_floats(self, nr: int):
         """ Split one line into  a list of floats.
 
-        The number of the line is selected by line_nr.
-        The split behaviour can be adjusted by changing self.split_pattern.
+        :param nr: line number
+        :return: list of floats
+        :see: self._to_floats
         """
-        return [float(i) for i in
-                re.compile(self.split_pattern).split(self.line(line_nr))]
+        return self._to_floats(self.line(nr))
 
-    def line_to_edge(self, nr:int):
-        """Convert one line to an edge.
+    def lines_to_floats(self, start:int=0, stop=None, flatten=False):
+        """Split a range of lines into floats
 
-        The number of the line is selected by line_nr.
-        The split behaviour can be adjusted by changing self.edge_pattern.
+        If stop is not given all remaining lines are used.
+
+        :param start: index of first line
+        :param stop: index of line after last line
+        :param flatten: flatten to one dimensional list
+        :return: one or two dimensional list of floats
+        :see: self._to_floats()
         """
-        match = re.compile(self.edge_pattern).match(self.line(nr))
-        return self._to_edge(match)
+        floats = []
+        for line in self.lines_to_list(start, stop):
+            if flatten:
+                floats += self._to_floats(line)
+            else:
+                floats.append(self._to_floats(line))
+        return floats
 
-    def line_to_permutation(self, nr:int, terminals:bool = False):
+    def line_to_permutation(self, nr: int, terminals: bool = False):
         """Convert one line to a permutation
 
         optionally surrounded by terminals
@@ -258,7 +380,7 @@ class Challenge:
         Result: (1, -3, 2)
         If terminals is True: (0, 1, -3, 2, 4)
 
-        The number of the line is selected by line_nr.
+        The number of the line is selected by nr.
         Input may be surrounded by a pair of round parenthesis.
 
         :param nr: line number
@@ -271,12 +393,12 @@ class Challenge:
             digits = match.group(1)
         else:
             digits = line
-        perm =  [int(d) for d in re.compile(self.split_pattern).split(digits)]
+        perm = [int(d) for d in re.compile(self.split_pattern).split(digits)]
         if terminals:
             perm = [0] + perm + [len(perm) + 1]
         return tuple(perm)
 
-    def line_to_permutations(self, nr:int):
+    def line_to_permutations(self, nr: int):
         """Convert one line to multiple permutations
 
         Example: (+1 -3, -2)(+4 +5)
@@ -294,9 +416,140 @@ class Challenge:
                 self.split_pattern).split(digits)))
         return result
 
+    # noinspection PyMethodMayBeStatic
+    def _to_edges(self, line:str):
+        """Convert input string to edges.
 
-    def edges(self, start:int=0, stop:int=None):
+        Detects if the line in single edge or multi edge format.
+
+        Single edge formats:
+
+            tail->head
+            tail->head:weight
+
+        Multi edge formats:
+
+            tail->head, head, head
+
+        Edge is of type namespace:
+
+            edge.tail
+            edge.head
+            edge.weight if given
+
+        :param line: input string
+        :return: list of edge
+        """
+        edges = []
+        match = re.compile(self.edge_pattern).match(line)
+        if match:
+            edge = types.SimpleNamespace()
+            edge.tail = int(match.group(1))
+            edge.head = int(match.group(2))
+            if match.group(4):
+                edge.weight = int(match.group(4))
+            edges.append(edge)
+        else:
+            match = re.compile(self.multi_edge_pattern).match(line)
+            if match:
+                tail = int(match.group(1))
+                rest = match.group(2)
+                heads = [int(i) for i in
+                         re.compile(self.split_pattern).split(rest)]
+                for head in heads:
+                    edge = types.SimpleNamespace()
+                    edge.tail = tail
+                    edge.head = head
+                    edges.append(edge)
+        return edges
+
+    def line_to_edge(self, nr: int):
+        """Convert one line to an edge.
+
+        :param nr: line number
+        :return: edge (namespace: tail, head, weight)
+        :see: self._to_edges
+        """
+        return self._to_edges(self.line(nr))[0]
+
+    def line_to_edges(self, nr: int):
+        """Convert one line to multiple edges.
+
+        1->2,3,4
+
+        :param nr: line number
+        :return: edge (namespace: tail, head, weight)
+        :see: self._to_edges
+        """
+        return self._to_edges(self.line(nr))
+
+    def lines_to_edges(self, start: int = 0, stop: int = None):
+        """Retrun a list of edges for range of lines.
+
+        1->2       # simple edge
+        1->2:22    # weighted edge
+        1->2,3,4   # muliple edges per line
+
+        If stop is not given all remaining lines are used.
+
+        :param start:
+        :param stop:
+        :return: list of edges (namespace: tail, head, weight)
+        :see: self._to_edges
+        """
+        edges = []
+        for line in self.lines_to_list(start, stop):
+                edges += self._to_edges(line)
+        return edges
+
+    def lines_to_graph(self, start: int = 0, stop: int = None):
+        """Retrun a graph for range of lines
+
+        If stop is not given all remaining lines are usee.
+
+        Formats:
+
+            1->2       # simple edge
+            1->2:22    # weighted edge
+            1->2,3,4   # muliple edges per line
+
+        Properties:
+
+            graph.edges:
+                dict, tails as keys and list of heads as values
+
+            graph.weights:
+                dict, pairs of tail, head as keys and weight as value
+
+        :param start:
+        :param stop:
+        :return: graph, namespace with graphs properties
+        :see: self._to_edges
+        """
+        graph = types.SimpleNamespace()
+        graph.edges = defaultdict(list)
+        graph.weights = dict()
+        edges = []
+        nodes = []
+        for line in self.lines_to_list(start, stop):
+            edges += self._to_edges(line)
+        for edge in edges:
+            nodes.append(edge.head)
+            nodes.append(edge.tail)
+            graph.edges[edge.tail].append(edge.head)
+            try:
+                graph.weights[(edge.tail, edge.head)] = edge.weight
+            except AttributeError:
+                pass
+        graph.nodes = sorted(set(nodes))
+        graph.edge_count = len(edges)
+        graph.node_count = len(graph.nodes)
+        return graph
+
+    def edges(self, start: int = 0, stop: int = None):
         """Generator to read edges from lines.
+
+        !!! DEPRECATED !!! use lines_to_edges()
 
         Reads a range of lines, one edge per line, and yields the edges.
 
@@ -308,6 +561,14 @@ class Challenge:
         lines are used as long as they match the edge_pattern reg expression.
         The match behaviour can be adjusted by the self.edge_pattern.
         """
+        def _to_edge(match):
+            edge = types.SimpleNamespace()
+            edge.tail = int(match.group(1))
+            edge.head = int(match.group(2))
+            if match.group(4):
+                edge.weight = int(match.group(4))
+            return edge
+
         if stop is None:
             stop = math.inf
         nr = start
@@ -318,12 +579,12 @@ class Challenge:
                 break
             match = re.compile(self.edge_pattern).match(line)
             if match:
-                yield (self._to_edge(match))
+                yield (_to_edge(match))
                 nr += 1
             else:
                 break  # If edges end before stop, which may be infinity
 
-    def fasta(self, start:int=0, stop:int=None):
+    def fasta(self, start: int = 0, stop: int = None):
         """Generator to read FASTA formatted samples.
 
         Reads multiple fasta sequences and yields them.
@@ -360,35 +621,26 @@ class Challenge:
         # Yield final sequence
         yield name, sequence
 
-    def fasta_strands(self, start:int=0, stop:int=None):
+    def fasta_strands(self, start: int = 0, stop: int = None):
         """ Get the strands of a fasta read as list.
 
         Takes the same arguments as self.fasta() and delegates to it.
         """
         return list(dict(self.fasta(start, stop)).values())
 
-    # noinspection PyMethodMayBeStatic
-    def _to_edge(self, match):
-        edge = types.SimpleNamespace()
-        edge.tail = int(match.group(1))
-        edge.head = int(match.group(2))
-        if match.group(4):
-            edge.weight = int(match.group(4))
-        return edge
-
     # --------------------------------------------------
     # Formatting
     # --------------------------------------------------
 
     # noinspection PyMethodMayBeStatic
-    def format_list_of_integers(self, integers:list, joint:str=', '):
+    def format_list_of_integers(self, integers: list, joint: str = ', '):
         """Join a list of integers to a string
 
         Use the given joint.
         """
         return joint.join(str(x) for x in integers)
 
-    def format_path(self, integers:list, backwards:bool=False):
+    def format_path(self, integers: list, backwards: bool = False):
         """Join a list of integers to path of nodes.
 
         The joint is -> by default. If the parameter
@@ -400,8 +652,8 @@ class Challenge:
             joint = '->'
         return self.format_list_of_integers(integers, joint)
 
-    def format_permutations(self, permutations:list, separator:str = '\n',
-                            element_separator:str = ' '):
+    def format_permutations(self, permutations: list, separator: str = '\n',
+                            element_separator: str = ' '):
         entries = []
         for perm in permutations:
             entry = '('
