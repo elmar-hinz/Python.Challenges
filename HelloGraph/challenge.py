@@ -3,7 +3,7 @@ from challenges import Challenge
 
 class HelloGraphChallenge(Challenge):
     """
-        Given: Two nodes and a list of edges
+        Given: Two nodes and a list of edges denoting a path
         Return: Graph between the nodes and it's weight
     """
 
@@ -23,23 +23,22 @@ class HelloGraphChallenge(Challenge):
     '''
 
     def build(self):
+        self.model = self.lines_to_graph(start=2)
         self.model.start = self.line_to_integer(0)
         self.model.stop = self.line_to_integer(1)
-        self.model.graph = dict()
-        for edge in self.edges(2):
-            self.model.graph[edge.tail] = (edge.head, edge.weight)
 
     def calc(self):
-        head = None
         tail = self.model.start
-        self.result.graph = [tail]
+        self.result.path = [tail]
         self.result.weight = 0
         while tail != self.model.stop:
-            self.result.weight += self.model.graph[tail][1]
-            tail = self.model.graph[tail][0]
-            self.result.graph.append(tail)
+            # it's a path, just one way to go
+            head = self.model.edges[tail][0]
+            self.result.path.append(head)
+            self.result.weight += self.model.weights[(tail, head)]
+            tail = head
 
     def format(self):
-        self.output = self.format_path(self.result.graph)
+        self.output = self.format_path(self.result.path)
         self.output += self.br
         self.output += str(self.result.weight)

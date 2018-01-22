@@ -16,12 +16,12 @@ class HelloGraphTest(unittest.TestCase):
         self.challenge.build()
         self.assertEqual(2, self.challenge.model.start)
         self.assertEqual(4, self.challenge.model.stop)
-        self.assertEqual(4, self.challenge.model.graph[3][0])
-        self.assertEqual(10, self.challenge.model.graph[3][1])
+        self.assertIn(4, self.challenge.model.edges[3])
+        self.assertEqual(10, self.challenge.model.weights[(3, 4)])
 
     def test_format(self):
         self.challenge.result.weight = 14
-        self.challenge.result.graph = [2, 3, 4]
+        self.challenge.result.path = [2, 3, 4]
         self.challenge.format()
         self.assertEqual(self.challenge.expectation(), self.challenge.output)
 
